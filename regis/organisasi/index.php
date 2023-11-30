@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             }
             ?>
-                    <div class="top_link"><a href="\nuraga/index.html"><img src="https://drive.google.com/u/0/uc?id=16U__U5dJdaTfNGobB_OpwAJ73vM50rPV&export=download" alt="">Kembali ke halaman utama</a></div>
+                    <div class="top_link"><a href="\nuraga/index.php"><img src="https://drive.google.com/u/0/uc?id=16U__U5dJdaTfNGobB_OpwAJ73vM50rPV&export=download" alt="">Kembali ke halaman utama</a></div>
 <br><br>
                     <h2 class="title">Pendaftaran organisasi</h2>
                     <?php

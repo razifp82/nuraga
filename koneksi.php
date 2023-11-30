@@ -1,18 +1,16 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "nuraga";
+function connectDB() {
+    $host = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "nuraga";
 
-// Membuat koneksi
-$conn = new mysqli($servername, $username, $password, $database);
+    $conn = new mysqli($host, $username, $password, $database);
 
-// Memeriksa koneksi
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    return $conn;
 }
-
-echo "koneksi berhasil ";
-
-
 ?>
