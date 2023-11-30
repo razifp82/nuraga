@@ -2,10 +2,10 @@
 session_start();
 
 function connectDB() {
-    $host = "localhost";  
-    $username = "root";   
-    $password = "";      
-    $database = "nuraga";  
+    $host = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "nuraga";
 
     $conn = new mysqli($host, $username, $password, $database);
 
@@ -14,7 +14,7 @@ function connectDB() {
     }
 
     return $conn;
-}  
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama = $_POST["nama"];
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tanggal_lahir = date("Y-m-d", strtotime($_POST["tanggal_lahir"]));
 
     if (empty($nama) || empty($email) || empty($password) || empty($jenis_kelamin) || empty($username) || empty($alamat) || empty($tanggal_lahir)) {
-        echo "Harap isi semua bidang.";
+        echo "<script>alert('Harap isi semua bidang.');</script>";
     } else {
         // Membuat koneksi ke database
         $conn = connectDB();
@@ -47,9 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO relawan (nama, email, password, jenis_kelamin, username, alamat, tanggal_lahir) VALUES ('$nama', '$email', '$hashed_password', '$jenis_kelamin', '$username', '$alamat', '$tanggal_lahir')";
 
         if ($conn->query($sql) === TRUE) {
-            echo "Pendaftaran berhasil! Selamat datang, $nama!";
+            echo "<script>alert('Pendaftaran berhasil! Selamat datang, $nama!');</script>";
         } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+            echo "<script>alert('Error: " . $sql . "\\n" . $conn->error . "');</script>";
         }
 
         // Menutup koneksi ke database
@@ -90,6 +90,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="page-wrapper bg-red p-t-180 p-b-100 font-robo">
         <div class="wrapper wrapper--w960">
             <div class="card card-2">
+            <?php
+            
+            if (isset($_SESSION["user"], $_SESSION["userType"])) {
+               
+                switch ($_SESSION["userType"]) {
+                    case 'admin':
+                        header("Location: /nuraga/admin/admin.php?username=" . $_SESSION["user"]);
+                        break;
+                    case 'relawan':
+                        header("Location: /nuraga/relawan/relawan.php?username=" . $_SESSION["user"]);
+                        break;
+                    case 'organisasi':
+                        header("Location: /nuraga/organisasi/organisasi.php?username=" . $_SESSION["user"]);
+                        break;
+                    default:
+                        
+                        break;
+                }
+                exit();
+            }
+            ?>
                 <div class="card-heading"></div>
                 <div class="card-body">
                     <div class="top_link"><a href="\nuraga/index.html"><img src="https://drive.google.com/u/0/uc?id=16U__U5dJdaTfNGobB_OpwAJ73vM50rPV&export=download" alt="">Kembali ke halaman utama</a></div>

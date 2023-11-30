@@ -2,10 +2,10 @@
 session_start();
 
 function connectDB() {
-    $host = "localhost";  
-    $username = "root";   
-    $password = "";      
-    $database = "nuraga";  
+    $host = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "nuraga";
 
     $conn = new mysqli($host, $username, $password, $database);
 
@@ -14,7 +14,7 @@ function connectDB() {
     }
 
     return $conn;
-}  
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama_organisasi = $_POST["nama_organisasi"];
@@ -24,10 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $ketua_organisasi = $_POST["ketua_organisasi"];
     $deskripsi_organisasi = $_POST["deskripsi_organisasi"];
-    
 
     if (empty($nama_organisasi) || empty($email) || empty($password) || empty($sosial_media) || empty($username) || empty($ketua_organisasi) || empty($deskripsi_organisasi)) {
-        echo "Harap isi semua bidang.";
+        $error_message = "Harap isi semua bidang.";
     } else {
         // Membuat koneksi ke database
         $conn = connectDB();
@@ -48,9 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO organisasi (nama_organisasi, email, password, sosial_media, username, ketua_organisasi, deskripsi_organisasi) VALUES ('$nama_organisasi', '$email', '$hashed_password', '$sosial_media', '$username', '$ketua_organisasi', '$deskripsi_organisasi')";
 
         if ($conn->query($sql) === TRUE) {
-            echo "Pendaftaran berhasil! Selamat datang, $nama_organisasi!";
+            $success_message = "Pendaftaran berhasil! Selamat datang, $nama_organisasi!";
         } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+            $error_message = "Error: " . $sql . "<br>" . $conn->error;
         }
 
         // Menutup koneksi ke database
@@ -63,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 
 <head>
+
     <!-- Required meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -93,10 +93,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="card card-2">
                 <div class="card-heading"></div>
                 <div class="card-body">
+                <?php
+            
+            if (isset($_SESSION["user"], $_SESSION["userType"])) {
+               
+                switch ($_SESSION["userType"]) {
+                    case 'admin':
+                        header("Location: /nuraga/admin/admin.php?username=" . $_SESSION["user"]);
+                        break;
+                    case 'relawan':
+                        header("Location: /nuraga/relawan/relawan.php?username=" . $_SESSION["user"]);
+                        break;
+                    case 'organisasi':
+                        header("Location: /nuraga/organisasi/organisasi.php?username=" . $_SESSION["user"]);
+                        break;
+                    default:
+                        
+                        break;
+                }
+                exit();
+            }
+            ?>
                     <div class="top_link"><a href="\nuraga/index.html"><img src="https://drive.google.com/u/0/uc?id=16U__U5dJdaTfNGobB_OpwAJ73vM50rPV&export=download" alt="">Kembali ke halaman utama</a></div>
 <br><br>
                     <h2 class="title">Pendaftaran organisasi</h2>
-                    <form method="POST">
+                    <?php
+                    if (isset($error_message)) {
+                        echo '<div style="color: red;">' . $error_message . '</div>';
+                    } elseif (isset($success_message)) {
+                        echo '<div style="color: green;">' . $success_message . '</div>';
+                    }
+                    ?>
+                    <form method="POST" onsubmit="return validateForm()">
                         <div class="input-group">
                             <input class="input--style-2" type="text" placeholder="Nama Organisasi" name="nama_organisasi">
                         </div>
@@ -138,7 +166,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Main JS-->
     <script src="js/global.js"></script>
 
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</body>
 
 </html>
-<!-- end document-->
