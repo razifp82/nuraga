@@ -22,18 +22,21 @@
         <a class="logo" href="organisasi.php"><img src="/nuraga/images/logo/logo.pth.png" height="50px" alt="logo"></a>
             <nav>
                 <ul class="nav__links">
-                    <li><a href="organisasi.php">Beranda</a></li>
-                    <li><a href="organisasi.php">Program</a></li>
-                    <li><a href="organisasi.php">Tentang Kami</a></li>
-                    <li><a href="daftar.php">Buat Kegiatan</a></li>
-                    <li><a href="kegiatan.php">kegiatan saya</a></li>
+                    <li><a href="relawan.php">Beranda</a></li>
+                    <li><a href="relawan.php">Program</a></li>
+                    <li><a href="relawan.php">Tentang Kami</a></li>
+                    <li><a href="kegiatan.php">Cari kegiatan</a></li>
                     <li><a href="logout.php">logout</a></li>
                 </ul>
             </nav>
 	
     </header>
     <div class="container my-3">
-
+<br>
+<div class="search-container">
+        <input type="text" id="search" placeholder="Search...">
+        <button type="button">Search</button>
+    </div>
 <br>
 
 </br>
@@ -50,9 +53,7 @@
                         <p class="card-text">Deskripsi Kegiatan</p>
                             
                         <div class="d-flex align-items-center">
-                            <a href="#" class="btn btn-primary">Selesai</a>
-                            <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-danger ms-2" onclick="deleteCard(this)"><i class="bi bi-trash"></i></button>
+                            <a href="#" class="btn btn-primary">GABUNG</a>
                         </div>
                     </div>
                 </div>
@@ -73,9 +74,7 @@
                         <p class="card-text"><i class="bi bi-calendar-date-fill"></i> 1 Apr 2024 - 1 Mei 2024</p>
                         <p class="card-text">Deskripsi Kegiatan</p>
                         <div class="d-flex align-items-center">
-                            <a href="#" class="btn btn-primary">Selesai</a>
-                            <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-danger ms-2" onclick="deleteCard(this)"><i class="bi bi-trash"></i></button>
+                            <a href="#" class="btn btn-primary">GABUNG</a>
                         </div>
                     </div>
                 </div>
@@ -96,9 +95,7 @@
                         <p class="card-text"><i class="bi bi-calendar-date-fill"></i> 1 Apr 2024 - 1 Mei 2024</p>
                         <p class="card-text">Deskripsi Kegiatan</p>
                         <div class="d-flex align-items-center">
-                            <a href="#" class="btn btn-primary">Selesai</a>
-                            <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-danger ms-2" onclick="deleteCard(this)"><i class="bi bi-trash"></i></button>
+                            <a href="#" class="btn btn-primary">GABUNG</a>
                         </div>
                     </div>
                 </div>
@@ -119,9 +116,7 @@
                         <p class="card-text"><i class="bi bi-calendar-date-fill"></i> 1 Apr 2024 - 1 Mei 2024</p>
                         <p class="card-text">Deskripsi Kegiatan</p>
                         <div class="d-flex align-items-center">
-                            <a href="#" class="btn btn-primary">Selesai</a>
-                            <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-danger ms-2" onclick="deleteCard(this)"><i class="bi bi-trash"></i></button>
+                            <a href="#" class="btn btn-primary">GABUNG</a>
                         </div>
                     </div>
                 </div>
@@ -141,9 +136,7 @@
                         <p class="card-text"><i class="bi bi-calendar-date-fill"></i> 1 Apr 2024 - 1 Mei 2024</p>
                         <p class="card-text">Deskripsi Kegiatan</p>
                         <div class="d-flex align-items-center">
-                            <a href="#" class="btn btn-primary">Selesai</a>
-                            <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-danger ms-2" onclick="deleteCard(this)"><i class="bi bi-trash"></i></button>
+                            <a href="#" class="btn btn-primary">GABUNG</a>
                         </div>
                     </div>
                 </div>
@@ -166,9 +159,7 @@
                         <p class="card-text"><i class="bi bi-calendar-date-fill"></i> 1 Apr 2024 - 1 Mei 2024</p>
                         <p class="card-text">Deskripsi Kegiatan</p>
                         <div class="d-flex align-items-center">
-                            <a href="#" class="btn btn-primary">Selesai</a>
-                            <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-danger ms-2" onclick="deleteCard(this)"><i class="bi bi-trash"></i></button>
+                            <a href="#" class="btn btn-primary">GABUNG</a>
                         </div>
                     </div>
                 </div>
@@ -182,29 +173,26 @@
 </div>
         <style>
     body {
-        background-image: url('/nuraga/images/bg.jpg');
-        background-size: cover; /* Adjust the size to cover the entire background */
-        background-position: center; /* Center the background image */
-        background-repeat: no-repeat; /* Prevent the background image from repeating */
+        background: radial-gradient(#d61212, #332042);
     }
 </style>
-    <!-- Add your content here, such as cards or a list of activities -->
+    
     <div class="row">
         <div class="col-md-5">
-            <!-- Your content goes here -->
+          
         </div>  
         <div class="col-md-5">
-            <!-- Your content goes here -->
+            
         </div>
         <div class="col-md-5">
-            <!-- Your content goes here -->
+         
         </div>
     </div>
 </div>
-<!-- Add this script to your page -->
+
 <script>
     function updateCardContent(element, property) {
-        // Retrieve the edited content and update the corresponding property
+       
         const content = element.innerText;
         const card = element.closest('.card');
         
@@ -221,12 +209,12 @@
             case 'imageAlt':
                 card.querySelector('.card-img').alt = content;
                 break;
-            // Add more cases for other editable content
+            
         }
     }
 </script>
 
-<!-- Add a footer section if needed -->
+
 <section id="contact">  
         <div class="contact-content">
             <h2>Kontak</h2>

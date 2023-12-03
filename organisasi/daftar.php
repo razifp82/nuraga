@@ -27,88 +27,31 @@
             </nav>
 	
     </header>
-    
-    <div class="px-1 py-5 mx-auto">
-    <div class="row d-flex justify-content-center">
-        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
-            <h3>Daftar Kegiatan</h3>
-            <div class="card" style="border-width: 0px;">
-                <form class="form-card" id="eventForm" action="save_data.php" method="post" onsubmit="return validateForm()">
-                    <div class="row">
-                        <!-- Left Column -->
-                        <div class="col-md-6">
-                            <div class="form-group flex-column d-flex">
-                                <label for="deskripsi_kegiatan" class="form-control-label px-3">Nama Kegiatan<span class="text-danger"> *</span></label>
-                                <input type="text" id="deskripsi_kegiatan" name="deskripsi_kegiatan" placeholder="" onblur="validate(4)">
-                            </div>
-                        </div>
-
-                        <!-- Right Columns -->
-                        <div class="col-md-6">
-                            <div class="form-group flex-column d-flex">
-                                <label for="deskripsi_kegiatan" class="form-control-label px-3">Lokasi<span class="text-danger"> *</span></label>
-                                <input type="text" id="deskripsi_kegiatan" name="deskripsi_kegiatan" placeholder="" onblur="validate(4)">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group flex-column d-flex">
-                                <label for="deskripsi_kegiatan" class="form-control-label px-3">Jenis Kegiatan<span class="text-danger"> *</span></label>
-                                <input type="text" id="deskripsi_kegiatan" name="deskripsi_kegiatan" placeholder="" onblur="validate(4)">
-                            </div>
-                        </div>
-
-                        <!-- Right Columns -->
-                        <div class="col-md-6">
-                            <div class="form-group flex-column d-flex">
-                                <label for="deskripsi_kegiatan" class="form-control-label px-3">Deskripsi Kegiatan<span class="text-danger"> *</span></label>
-                                <input type="text" id="deskripsi_kegiatan" name="deskripsi_kegiatan" placeholder="" onblur="validate(4)">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group flex-column d-flex">
-                                <label for="tanggal" class="form-control-label px-3">Tanggal<span class="text-danger"> *</span></label>
-                                <input type="date" id="tanggal" name="tanggal" placeholder="" onblur="validate(4)">
-                                </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group flex-column d-flex text-center">
-                                <label for="gambar" class="form-control-label px-3">Gambar<span class="text-danger"> *</span></label>
-                                <input type="text" id="gambar" name="gambar" placeholder="" onblur="validate(6)">
-                                <br>
-                                <button type="submit" class="btn btn-primary d-flex justify-content-center align-items-center" id="doneButton">Done</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-    <!-- Modal Structure -->
-    <div class="modal" tabindex="-1" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirmation</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="modalContent">Are you sure you want to submit the form?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap JavaScript library -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-rd95JB4TXw2TQQv1jDEZZR4l/np0U9aWTftSIUmto9IPAg6Q3PjigKFJoCnq2UpZ" crossorigin="anonymous"></script>
-
-   
-    <!-- Add a footer section if needed -->
+    <section id="login">
+        <div class="login">
+    <br>
+    <form>
+        <label for="nama-kegiatan">Nama Kegiatan:</label>
+        <input type="text" id="nama-kegiatan" name="nama-kegiatan" required>
+        
+        <label for="jenis-kegiatan">Jenis Kegiatan:</label>
+        <input type="text" id="jenis-kegiatan" name="jenis-kegiatan" required>
+        
+        <label for="deskripsi-kegiatan">Deskripsi Kegiatan:</label>
+        <textarea id="deskripsi-kegiatan" name="deskripsi-kegiatan" required></textarea>
+        
+        <label for="tanggal-kegiatan">Tanggal Kegiatan:</label>
+        <input type="date" id="tanggal-kegiatan" name="tanggal-kegiatan" required>
+        
+        <label for="tanggal">Lokasi</label>
+        <input type="text" id="Lokasi" name="Lokasi" required>
+        
+        <label for="dokumentasi">Dokumentasi (file):</label>
+        <input type="file" id="dokumentasi" name="dokumentasi" required>
+        
+        <input type="submit" value="Submit">
+    </form>
+    <br></div></section>
 <section id="contact">  
         <div class="contact-content">
             <h2>Kontak</h2>

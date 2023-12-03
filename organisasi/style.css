@@ -219,70 +219,7 @@ footer {
 img{
 	width: 100%;
 }
-.login {
-    height: 800px;
-    width: 100%;
-    background: radial-gradient(#d61212, #332042);
-    position: relative;
-}
-.login_box {
-    width: 1050px;
-    height: 600px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 1px 4px 22px -8px #0004;
-    display: flex;
-    overflow: hidden;
-}
-.login_box .left{
-  width: 41%;
-  height: 100%;
-  padding: 25px 25px;
-  
-}
-.login_box .right{
-  width: 59%;
-  height: 100%  
-}
-.left .top_link a {
-    color: #452A5A;
-    font-weight: 400;
-}
-.left .top_link{
-  height: 20px
-}
-.left .contact{
-	display: flex;
-    align-items: center;
-    justify-content: center;
-    align-self: center;
-    height: 100%;
-    width: 73%;
-    margin: auto;
-}
-.left h3{
-  text-align: center;
-  margin-bottom: 40px;
-}
-.left input {
-    border: none;
-    width: 80%;
-    margin: 15px 0px;
-    border-bottom: 1px solid #4f30677d;
-    padding: 7px 9px;
-    width: 100%;
-    overflow: hidden;
-    background: transparent;
-    font-weight: 600;
-    font-size: 14px;
-}
-.left{
-	background: linear-gradient(-45deg, #dcd7e0, #fff);
-}
+
 .submit {
     border: none;
     padding: 15px 70px;
@@ -339,138 +276,6 @@ img{
     width: 28px;
     padding-right: 7px;
     margin-top: -3px;
-}
-
-.modal-btn {
-  position: relative;
-  display: table-cell;
-  width: 100px;
-  height: 100px;
-  background-color: #2c3e50;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
-  border-radius: 50%;
-  font-size: 36px;
-  color: white;
-  text-align: center;
-  line-height: 2.75;
-  transition: box-shadow 250ms ease;
-}
-.modal-btn:hover {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-.modal-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  z-index: 10;
-  visibility: hidden;
-  transition: background-color 250ms linear;
-}
-
-.modal-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 40%;
-  height: auto;
-  margin-top: -10%;
-  margin-left: -20%;
-  padding: 30px;
-  background-color: white;
-  border-radius: 4px;
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
-  transform: scale(0);
-  transition: transform 250ms ease;
-  visibility: hidden;
-  z-index: 20;
-}
-.modal-content .close {
-  position: relative;
-  float: right;
-  font-size: 18px;
-  transition: transform 500ms ease;
-  z-index: 11;
-}
-.modal-content .close:hover {
-  color: #3498db;
-  transform: rotate(540deg);
-}
-.modal-content header {
-  position: relative;
-  display: block;
-  border-bottom: 1px solid #eee;
-}
-.modal-content header h2 {
-  margin: 0 0 10px;
-  padding: 0;
-  font-size: 28px;
-}
-.modal-content article {
-  position: relative;
-  display: block;
-  margin: 0;
-  padding: 0;
-  font-size: 16px;
-  line-height: 1.75;
-}
-.modal-content footer {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
-  margin: 0;
-  padding: 10px 0 0;
-}
-.modal-content footer .button {
-  position: relative;
-  padding: 10px 30px;
-  border-radius: 3px;
-  font-size: 14px;
-  font-weight: 400;
-  color: white;
-  text-transform: uppercase;
-  overflow: hidden;
-}
-.modal-content footer .button:before {
-  position: absolute;
-  content: '';
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  transition: width 250ms ease;
-  z-index: 0;
-}
-.modal-content footer .button:hover:before {
-  width: 100%;
-}
-.modal-content footer .button.success {
-  margin: 35px;
-  background-color: #e74c3c;
-}
-.modal-content footer .button.danger {
-  background-color: #e74c3c;
-}
-
-#modal {
-  display: none;
-}
-#modal:checked ~ .modal-bg {
-  visibility: visible;
-  background-color: black;
-  opacity: 0.7;
-  transition: background-color 250ms linear;
-}
-#modal:checked ~ .modal-content {
-  visibility: visible;
-  transform: scale(1);
-  transition: transform 250ms ease;
-  z-index: 111;
 }
 
 article {
@@ -544,7 +349,7 @@ article a .icon {
   transition: all 0.3s;
 }
 
-/* using the has() relational pseudo selector to update our custom properties */
+
 article:has(:hover, :focus) {
   --img-scale: 1.1;
   --title-color: #28666e;
@@ -554,9 +359,7 @@ article:has(:hover, :focus) {
 }
 
 
-/************************ 
-Generic layout (demo looks)
-**************************/
+
 
 *,
 *::before,
@@ -663,7 +466,65 @@ Generic layout (demo looks)
     font-family: Arial, Helvetica, sans-serif;
   }
   
+  form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #d61212;
+    border-radius: 5px;
+}
 
+label {
+    display: block;
+    margin-bottom: 10px;
+}
 
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
 
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
 
+input[type="file"] {
+    margin-bottom: 10px;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.login {
+  height: auto;
+  width: auto;
+  background: radial-gradient(#d61212, #332042);
+  position: relative;
+}
+
+.laporan {
+  height: auto;
+  width: auto;
+  background: radial-gradient(#d61212, #332042);
+  position: relative;
+  font-weight: bold;    
+  color: white; 
+}

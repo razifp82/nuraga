@@ -146,14 +146,13 @@ if (isset($_GET["usertype"]) && $_GET["usertype"] !== $_SESSION["userType"]) {
 </section>
         </div>
     </section>
-
     <section id="about">
         <div class="about-content">
-            <h2>Tentang Kami</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc id aliquam tincidunt, nunc nunc ultrices nunc, id lacinia nunc nunc id nunc. Sed auctor, nunc id aliquam tincidunt, nunc nunc ultrices nunc, id lacinia nunc nunc id nunc.</p>
+            <img src="\nuraga/images/logo/logo.htm.png" alt="">
+            <br>
+            <h2 align="center">Nuraga adalah website online yang mempertemukan organisasi sosial yang membutuhkan relawan dengan siapapun yang ingin menjadi relawan, dan juga memudahkan para relawan mencari suatu kegiatan sosial. Mimpi besar kami adalah melihat kegiatan menjadi relawan sebagai gaya hidup. Di mana relawan bukan lagi kegiatan sosial yang eksklusif tapi sudah menjadi kebiasaan masyarakat Indonesia. Misi utama kami yakni ingin membuat kolaborasi antara relawan dengan organisasi/komunitas dengan misi sosial menjadi lebih mudah melalui platform nuraga</h2>
         </div>
     </section>
-
     <section id="contact">  
         <div class="contact-content">
             <h2>Kontak</h2>

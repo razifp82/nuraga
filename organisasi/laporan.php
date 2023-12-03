@@ -21,20 +21,30 @@
             </nav>
 	
     </header>
-    <div class="center">
-      <h1>Laporan Kegiatan</h1>
-      <div class="textarea">
-        <form action="/form/submit" method="post">
-          <textarea name="textarea" rows="15" cols="70" placeholder=" Hasil Laporan"></textarea>
-          <br>
-          <button type="submit" class="submit">Submit</button>
-					
-          
-        </form>
+    <body>
+        <section id="login">
+            <div class="laporan">
+        <br>
+    <form>
+        <div></div>
+        <h3 align="center" style="text">LAPORAN KEGIATAN</h3><br>
+        <textarea id="deskripsi-kegiatan" name="deskripsi-kegiatan" style="padding: 100px;"></textarea>
+
+        <input type="submit" value="Submit">
+    </form>
+    <br></div>
+    </section>
+    <section id="contact">  
+        <div class="contact-content">
+            <h2>Kontak</h2>
+            <p>Email: nuraga@gmail.com</p>
+            <p>Telepon: 123-456-7890</p>
         </div>
-        
-    </div>
-    
+    </section>
+
+    <footer>
+        <p>Hak Cipta &copy; 2023 NURAGA</p>
+    </footer>
     
 </body>
 </html>

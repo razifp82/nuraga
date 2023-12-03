@@ -8,6 +8,6 @@ setcookie('userType', '', time() - 3600, '/');
 
 session_destroy();
 
-header("location: /nuraga/index.html");
+header("location: /nuraga/index.php");
 exit();
 ?>
