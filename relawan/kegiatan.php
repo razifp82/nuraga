@@ -1,3 +1,30 @@
+<?php
+session_start();
+
+include 'koneksi.php';
+
+if (!isset($_SESSION["user"]) || !isset($_SESSION["userType"])) {
+    header("location: /nuraga/login.php");
+    exit;
+}
+
+
+if ($_SESSION["userType"] !== 'relawan') {
+    // Redirect ke halaman yang sesuai dengan hak akses pengguna
+    switch ($_SESSION["userType"]) {
+        case 'admin':
+            header("Location: /nuraga/admin/admin.php?username=" . $_SESSION["user"]);
+            break;
+        case 'organisasi':
+            header("Location: /nuraga/organisasi/organisasi.php?username=" . $_SESSION["user"]);
+            break;
+        default:
+            header("Location: /nuraga/login.php");
+            break;
+    }
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>

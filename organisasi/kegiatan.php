@@ -1,3 +1,46 @@
+<?php
+session_start();
+
+function connectDB() {
+    $host = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "nuraga";
+
+    $conn = new mysqli($host, $username, $password, $database);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    return $conn;
+}
+
+global $conn;
+
+$conn = connectDB();
+
+if (!isset($_SESSION["user"]) || !isset($_SESSION["userType"])) {
+    header("location: /nuraga/login.php");
+    exit;
+}
+
+if ($_SESSION["userType"] !== 'organisasi') {
+ 
+  switch ($_SESSION["userType"]) {
+      case 'admin':
+          header("Location: /nuraga/admin/admin.php?username=" . $_SESSION["user"]);
+          break;
+      case 'relawan':
+          header("Location: /nuraga/relawan/relawan.php?username=" . $_SESSION["user"]);
+          break;
+      default:
+          header("Location: /nuraga/login.php");
+          break;
+  }
+  exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -26,8 +69,8 @@
                     <li><a href="organisasi.php">Program</a></li>
                     <li><a href="organisasi.php">Tentang Kami</a></li>
                     <li><a href="daftar.php">Buat Kegiatan</a></li>
-                    <li><a href="kegiatan.php">kegiatan saya</a></li>
-                    <li><a href="logout.php">logout</a></li>
+                    <li><a href="kegiatan.php">Kegiatan saya</a></li>
+                    <li><a href="logout.php">Logout</a></li>
                 </ul>
             </nav>
 	

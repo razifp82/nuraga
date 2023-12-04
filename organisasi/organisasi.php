@@ -1,47 +1,28 @@
 <?php
 session_start();
 
-function connectDB() {
-    $host = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "nuraga";
-
-    $conn = new mysqli($host, $username, $password, $database);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    return $conn;
-}
-
-// Panggil fungsi connectDB untuk mendapatkan koneksi
-$conn = connectDB();
+include 'koneksi.php';
 
 if (!isset($_SESSION["user"]) || !isset($_SESSION["userType"])) {
     header("location: /nuraga/login.php");
     exit;
 }
 
-if (isset($_GET["usertype"]) && $_GET["usertype"] !== $_SESSION["userType"]) {
-    switch ($_SESSION["userType"]) {
-        case 'admin':
-            header("Location: /nuraga/admin/admin.php?username=" . $_SESSION["user"]);
-            break;
-        case 'relawan':
-            header("Location: /nuraga/relawan/relawan.php?username=" . $_SESSION["user"]);
-            break;
-        case 'organisasi':
-            header("Location: /nuraga/organisasi/organisasi.php?username=" . $_SESSION["user"]);
-            break;
-        default:
-            break;
-    }
-    exit;
+if ($_SESSION["userType"] !== 'organisasi') {
+ 
+  switch ($_SESSION["userType"]) {
+      case 'admin':
+          header("Location: /nuraga/admin/admin.php?username=" . $_SESSION["user"]);
+          break;
+      case 'relawan':
+          header("Location: /nuraga/relawan/relawan.php?username=" . $_SESSION["user"]);
+          break;
+      default:
+          header("Location: /nuraga/login.php");
+          break;
+  }
+  exit;
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="id">
