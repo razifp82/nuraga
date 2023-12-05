@@ -1,24 +1,7 @@
 <?php
 session_start();
 
-function connectDB() {
-    $host = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "nuraga";
-
-    $conn = new mysqli($host, $username, $password, $database);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    return $conn;
-}
-
-global $conn;
-
-$conn = connectDB();
+include ".././koneksi.php";
 
 if (!isset($_SESSION["user"]) || !isset($_SESSION["userType"])) {
     header("location: /nuraga/login.php");

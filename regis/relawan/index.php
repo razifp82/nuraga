@@ -1,20 +1,7 @@
 <?php
 session_start();
 
-function connectDB() {
-    $host = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "nuraga";
-
-    $conn = new mysqli($host, $username, $password, $database);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    return $conn;
-}
+include "../.././koneksi.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama = $_POST["nama"];
@@ -28,8 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($nama) || empty($email) || empty($password) || empty($jenis_kelamin) || empty($username) || empty($alamat) || empty($tanggal_lahir)) {
         echo "<script>alert('Harap isi semua bidang.');</script>";
     } else {
-        // Membuat koneksi ke database
-        $conn = connectDB();
 
         // Melakukan escape string untuk menghindari SQL Injection
         $nama = $conn->real_escape_string($nama);

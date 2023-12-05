@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include 'koneksi.php';
+include ".././koneksi.php";
 
 global $conn;
 
@@ -27,7 +27,7 @@ if ($_SESSION["userType"] !== 'organisasi') {
     }
     exit;
 }
-$id_organisasi = $_SESSION['id_organisasi'];
+
 // Proses form jika ada pengiriman data melalui POST
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
     $nama_kegiatan = $_POST["nama-kegiatan"];
@@ -49,8 +49,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
     // Pindahkan file ke direktori upload
     if (move_uploaded_file($tmp_file, $upload_path)) {
         // Implementasikan penyimpanan data ke database, sesuaikan dengan struktur tabel Anda
-        $query = "INSERT INTO kegiatan (nama_kegiatan, jenis_kegiatan, deskripsi_kegiatan, tanggal_kegiatan, lokasi, dokumentasi,organisasi,id_organisasi) 
-                  VALUES ('$nama_kegiatan', '$jenis_kegiatan', '$deskripsi_kegiatan', '$tanggal_kegiatan', '$lokasi', '$nama_file','$id_organisasi','$id_organisasi')";
+        $query = "INSERT INTO kegiatan (nama_kegiatan, jenis_kegiatan, deskripsi_kegiatan, tanggal_kegiatan, lokasi, dokumentasi,organisasi) 
+                  VALUES ('$nama_kegiatan', '$jenis_kegiatan', '$deskripsi_kegiatan', '$tanggal_kegiatan', '$lokasi', '$nama_file','$id_organisasi')";
 
         if ($conn->query($query) === TRUE) {
             // Redirect ke halaman kegiatan setelah berhasil menyimpan

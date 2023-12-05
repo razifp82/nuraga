@@ -1,35 +1,21 @@
 <?php
 session_start();
 
-function connectDB() {
-    $host = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "nuraga";
-
-    $conn = new mysqli($host, $username, $password, $database);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    return $conn;
-}
+include "../.././koneksi.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama_organisasi = $_POST["nama_organisasi"];
-    $email = $_POST["email"];
+    $email_organisasi = $_POST["email_organisasi"];
     $password = $_POST["password"];
     $sosial_media = $_POST["sosial_media"];
     $username = $_POST["username"];
     $ketua_organisasi = $_POST["ketua_organisasi"];
     $deskripsi_organisasi = $_POST["deskripsi_organisasi"];
 
-    if (empty($nama_organisasi) || empty($email) || empty($password) || empty($sosial_media) || empty($username) || empty($ketua_organisasi) || empty($deskripsi_organisasi)) {
+    if (empty($nama_organisasi) || empty($email_organisasi) || empty($password) || empty($sosial_media) || empty($username) || empty($ketua_organisasi) || empty($deskripsi_organisasi)) {
         $error_message = "Harap isi semua bidang.";
     } else {
         // Membuat koneksi ke database
-        $conn = connectDB();
 
         // Melakukan escape string untuk menghindari SQL Injection
         $nama_organisasi = $conn->real_escape_string($nama_organisasi);
@@ -129,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input class="input--style-2" type="text" placeholder="Nama Organisasi" name="nama_organisasi">
                         </div>
                         <div class="input-group">
-                            <input class="input--style-2" type="text" placeholder="Email" name="email">
+                            <input class="input--style-2" type="text" placeholder="Email" name="email_organisasi">
                         </div>
                         <div class="input-group">
                             <input class="input--style-2" type="text" placeholder="Sosial Media" name="sosial_media">

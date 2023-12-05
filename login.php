@@ -12,19 +12,32 @@ function login($username, $password) {
     $password = $conn->real_escape_string($password);
 
     // Enkripsi password dengan MD5
-    $password = md5($password);
+    // $password = md5($password);
 
     // Tentukan tabel login berdasarkan username
     $tables = ['admin', 'relawan', 'organisasi'];
 
     foreach ($tables as $table) {
-        $query = "SELECT * FROM $table WHERE username='$username' AND password='$password'";
+        $query = "SELECT * FROM $table WHERE username='$username'";
         $result = $conn->query($query);
 
         if ($result->num_rows == 1) {
+            // Ambil data dari hasil query
+            $row = $result->fetch_assoc();
+
+            // cek password verify
+            
+            // Assign nama organisasi ke variabel $nama_organisasi
+        
             // Login berhasil
             $_SESSION['user'] = $username;
             $_SESSION['userType'] = $table;
+ 
+            
+            $_SESSION[''] = $row[''];
+            $_SESSION[''] = $row[''];
+            $_SESSION[''] = $row[''];
+
 
             // Set cookies
             setcookie('username', $username, time() + (86400 * 30), "/"); // 86400 detik = 1 hari
@@ -32,13 +45,31 @@ function login($username, $password) {
 
             switch ($table) {
                 case 'admin':
-                    header("Location: admin/admin.php?username=".$username);  
+                    $_SESSION[''] = $row[''];
+                    $_SESSION[''] = $row[''];
+                    $_SESSION[''] = $row[''];
+                    $_SESSION[''] = $row[''];
+                    $_SESSION[''] = $row[''];
+                    $_SESSION[''] = $row[''];
+                    header("Location: admin/admin.php?username=".$username);
                     break;
                 case 'relawan':
-                    header("Location: relawan/relawan.php?username=".$username); 
+                    $_SESSION[''] = $row[''];
+                    $_SESSION[''] = $row[''];
+                    $_SESSION[''] = $row[''];
+                    $_SESSION[''] = $row[''];
+                    $_SESSION[''] = $row[''];
+                    $_SESSION[''] = $row[''];
+                    header("Location: relawan/relawan.php?username=".$username);
                     break;
                 case 'organisasi':
-                    header("Location: organisasi/organisasi.php?username=".$username);  
+                    $_SESSION['nama_organisasi'] = $nama_organisasi;
+                    $_SESSION['id_organisasi'] = $row['id_organisasi'];
+                    $_SESSION['nama_organisasi'] = $row['nama_organisasi'];
+                    $_SESSION['sosial_media '] = $row['sosial_media'];
+                    $_SESSION['deskripsi_organisasi'] = $row['deskripsi_organisasi'];
+                    $_SESSION['email_organisasi'] = $row['email_organisasi']; 
+                    header("Location: organisasi/organisasi.php?username=".$username);
                     break;
                 default:
                     // Tambahkan penanganan kesalahan jika diperlukan
@@ -49,7 +80,7 @@ function login($username, $password) {
     }
 
     // Jika tidak ada kesesuaian, login gagal
-    echo "Login failed. Check your username and password.";
+    echo "Login gagal. Periksa username dan password Anda.";
 
     $conn->close();
 }
@@ -63,6 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     login($username, $password);
 }
 ?>
+
 
 
 
@@ -97,7 +129,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         break;
                 }
                 exit();
+                
             }
+
             ?>
                 <div class="left">
                     <div class="top_link"><a href="index.php"><img src="https://drive.google.com/u/0/uc?id=16U__U5dJdaTfNGobB_OpwAJ73vM50rPV&export=download" alt="">Kembali ke halaman utama</a></div>

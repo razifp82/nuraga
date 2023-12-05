@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include 'koneksi.php';
+include ".././koneksi.php";
 
 if (!isset($_SESSION["user"]) || !isset($_SESSION["userType"])) {
     header("location: /nuraga/login.php");
