@@ -23,6 +23,33 @@ if ($_SESSION["userType"] !== 'organisasi') {
   }
   exit;
 }
+
+// Di dalam blok yang menangani POST request
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Ambil id_kegiatan dari formulir
+    $id_kegiatan = $_POST["id_kegiatan"];
+
+    // Ambil deskripsi kegiatan dari formulir
+    $deskripsi_kegiatan = $_POST["deskripsi-kegiatan"];
+
+    // Periksa apakah id_kegiatan tidak kosong
+    if (!empty($id_kegiatan)) {
+        // Simpan laporan kegiatan ke database
+        $insertQuery = "INSERT INTO laporan_kegiatan (id_kegiatan, hasil_kegiatan) VALUES ('$id_kegiatan', '$deskripsi_kegiatan')";
+        $insertResult = $conn->query($insertQuery);
+
+        if ($insertResult) {
+            // Jika berhasil, arahkan pengguna ke halaman organisasi.php atau kegiatan.php
+            header("Location: /nuraga/organisasi/organisasi.php");
+            exit;
+        } else {
+            echo "Error: " . $insertQuery . "<br>" . $conn->error;
+        }
+    } else {
+        // Tambahkan logika penanganan jika id_kegiatan kosong
+        echo "Error: id_kegiatan is empty.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,18 +76,21 @@ if ($_SESSION["userType"] !== 'organisasi') {
 	
     </header>
     <body>
-        <section id="login">
-            <div class="laporan">
-        <br>
-    <form>
-        <div></div>
-        <h3 align="center" style="text">LAPORAN KEGIATAN</h3><br>
-        <textarea id="deskripsi-kegiatan" name="deskripsi-kegiatan" style="padding: 100px;"></textarea>
-
-        <input type="submit" value="Submit">
-    </form>
-    <br></div>
+    <section id="login">
+        <div class="laporan">
+            <br>
+            <form method="post" action="">
+                <!-- Tambahkan input hidden untuk menyimpan id_kegiatan -->
+                <input type="hidden" name="id_kegiatan" value="<?php echo isset($_GET['id_kegiatan']) ? $_GET['id_kegiatan'] : ''; ?>">
+                
+                <h3 align="center" style="text">LAPORAN KEGIATAN</h3><br>
+                <textarea id="deskripsi-kegiatan" name="deskripsi-kegiatan" style="padding: 100px;"></textarea>
+                <input type="submit" value="Submit">
+            </form>
+            <br>
+        </div>
     </section>
+    
     <section id="contact">  
         <div class="contact-content">
             <h2>Kontak</h2>

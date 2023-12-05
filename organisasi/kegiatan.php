@@ -56,6 +56,7 @@ if ($_SESSION["userType"] !== 'organisasi') {
 	
     </header>
     <div class="container my-3">
+   
 
 <br>
 
@@ -63,24 +64,25 @@ if ($_SESSION["userType"] !== 'organisasi') {
 
 <div class="row">
 <?php
-// Query untuk mengambil data kegiatan dari database
-$query = "SELECT nama_kegiatan, lokasi, tanggal_kegiatan, deskripsi_kegiatan, dokumentasi FROM kegiatan";
+$nama_organisasi = $_SESSION["user"];
+        // Query untuk mengambil data kegiatan dari database
+        $query = "SELECT id_kegiatan, nama_kegiatan, lokasi, tanggal_kegiatan, deskripsi_kegiatan, dokumentasi, status 
+          FROM kegiatan 
+          WHERE organisasi = '$nama_organisasi'";
 $result = $conn->query($query);
 
 // Periksa apakah query berhasil dijalankan
 if ($result) {
-    // Tampilkan header HTML dan navigasi
-   
     // Tampilkan konten HTML
     while ($row = $result->fetch_assoc()) {
-        $id_kegiatan = $row['id_kegiatan']; // Asumsi nama kolom adalah 'id_kegiatan'
+        $id_kegiatan = $row['id_kegiatan'];
         $nama_kegiatan = $row['nama_kegiatan'];
         $lokasi = $row['lokasi'];
         $tanggal_kegiatan = $row['tanggal_kegiatan'];
         $deskripsi = $row['deskripsi_kegiatan'];
         $dokumentasi = $row['dokumentasi'];
-        $status = $row['status']; // Asumsi nama kolom adalah 'status'
-    
+        $status = $row['status'];
+
         echo '<div class="col-md-6 mb-4">
                 <div class="card">
                     <div class="row no-gutters"> 
@@ -105,16 +107,22 @@ if ($result) {
                 </div>
             </div>';
     }
-    
+
     // Bebaskan hasil query
     $result->free_result();
-    
-    ?>
+} else {
+    // Tampilkan pesan jika query gagal
+    echo "Error: " . $query . "<br>" . $conn->error;
+}
+
+// Tutup koneksi ke database
+$conn->close();
+?>
 </br>
 </div>
         <style>
     body {
-        background-image: url('/nuraga/images/bg.jpg');
+        background: radial-gradient(#d61212, #332042);
         background-size: cover; /* Adjust the size to cover the entire background */
         background-position: center; /* Center the background image */
         background-repeat: no-repeat; /* Prevent the background image from repeating */
@@ -139,7 +147,7 @@ if ($result) {
         // Retrieve the edited content and update the corresponding property
         const content = element.innerText;
         const card = element.closest('.card');
-        
+
         switch (property) {
             case 'title':
                 card.querySelector('.card-title').innerText = content;
@@ -158,36 +166,47 @@ if ($result) {
     }
 
     function completeActivity(id_kegiatan) {
-            // Menggunakan AJAX untuk mengirim permintaan ke server
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'complete_activity.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    // Handle response, if needed
-                    console.log('Activity marked as completed.');
-                } else {
-                    console.error('Failed to complete activity.');
-                }
-            };
-            xhr.send('id_kegiatan=' + id_kegiatan);
-        }
+    // Menggunakan AJAX untuk mengirim permintaan ke server
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'complete_activity.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            // Handle response
+            console.log('Activity marked as completed.');
 
-        function deleteActivity(id_kegiatan) {
-            // Menggunakan AJAX untuk mengirim permintaan ke server
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'delete_activity.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    // Handle response, if needed
-                    console.log('Activity deleted.');
-                } else {
-                    console.error('Failed to delete activity.');
-                }
-            };
-            xhr.send('id_kegiatan=' + id_kegiatan);
+            // Redirect ke laporan.php atau halaman berikutnya
+            window.location.href = 'laporan.php';
+        } else {
+            console.error('Failed to complete activity.');
         }
+    };
+    xhr.send('id_kegiatan=' + id_kegiatan);
+}
+
+
+function deleteActivity(id_kegiatan) {
+    // Menggunakan AJAX untuk mengirim permintaan ke server
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'delete_activity.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            // Handle response
+            console.log('Activity deleted.');
+
+            // Tampilkan alert
+            alert('Data berhasil dihapus.');
+
+            // Refresh halaman setelah menampilkan alert
+            location.reload();
+        } else {
+            console.error('Failed to delete activity.');
+        }
+    };
+    xhr.send('id_kegiatan=' + id_kegiatan);
+}
+
 </script>
 
 <!-- Add a footer section if needed -->

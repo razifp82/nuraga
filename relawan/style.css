@@ -411,7 +411,7 @@ article:has(:hover, :focus) {
 }
 
 #search {
-    width: 30%;
+    width: 70%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px 0 0 4px;

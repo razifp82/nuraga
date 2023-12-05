@@ -51,7 +51,7 @@ function login($username, $password) {
                     header("Location: relawan/relawan.php?username=".$username);
                     break;
                 case 'organisasi':
-                    $_SESSION['nama_organisasi'] = $nama_organisasi;
+                    $_SESSION['nama_organisasi'] =  $nama_organisasi;
                     $_SESSION['id_organisasi'] = $row['id_organisasi'];
                     $_SESSION['nama_organisasi'] = $row['nama_organisasi'];
                     $_SESSION['sosial_media '] = $row['sosial_media'];

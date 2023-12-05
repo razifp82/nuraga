@@ -52,7 +52,7 @@ if ($_SESSION["userType"] !== 'relawan') {
 
     <section id="hero" >
         <div class="hero-content">
-            <h1 style="height: 30px;">Hai, <?php echo ucfirst($_SESSION["userType"]); ?>!</h1>
+            <h1 style="height: 30px;">Hai, <?php echo ucfirst( $_SESSION['nama']); ?>!</h1>
             <p>  senang melihat Anda kembali! Kami sangat menghargai kontribusi Anda sebagai relawan. </p>
             <p>Mari bersama-sama menjadikan dunia ini tempat yang lebih baik.</p>
             

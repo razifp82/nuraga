@@ -3,27 +3,24 @@ session_start();
 
 include ".././koneksi.php";
 
-if (!isset($_SESSION["user"]) || !isset($_SESSION["userType"])) {
-    header("location: /nuraga/login.php");
-    exit;
-}
+// ...
 
 if ($_SESSION["userType"] !== 'organisasi') {
- 
-  switch ($_SESSION["userType"]) {
-      case 'admin':
-          header("Location: /nuraga/admin/admin.php?username=" . $_SESSION["user"]);
-          break;
-      case 'relawan':
-          header("Location: /nuraga/relawan/relawan.php?username=" . $_SESSION["user"]);
-          break;
-      default:
-          header("Location: /nuraga/login.php");
-          break;
-  }
-  exit;
+    switch ($_SESSION["userType"]) {
+        case 'admin':
+            header("Location: /nuraga/admin/admin.php?username=" . $_SESSION["user"]);
+            break;
+        case 'relawan':
+            header("Location: /nuraga/relawan/relawan.php?username=" . $_SESSION["user"]);
+            break;
+        default:
+            header("Location: /nuraga/login.php");
+            break;
+    }
+    exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -59,151 +56,65 @@ if ($_SESSION["userType"] !== 'organisasi') {
 	
     </header>
     <div class="container my-3">
+   
 
 <br>
 
 </br>
 
 <div class="row">
-    <div class="col-md-6 mb-4">
-        <div class="card">
-            <div class="row no-gutters"> 
-                <div class="col-md-7">
-                    <div class="card-body">
-                        <h5 class="card-title text-center" contentEditable="true" oninput="updateCardContent(this, 'title')">Sosialisasi</h5>
-                        <p class="card-text"><i class="bi bi-geo-alt-fill"></i> <span contentEditable="true" oninput="updateCardContent(this, 'location')">Bengkong Indah 2</span></p>
-                        <p class="card-text"><i class="bi bi-calendar-date-fill"></i> <span contentEditable="true" oninput="updateCardContent(this, 'date')">1 Apr 2024 - 1 Mei 2024</span></p>
-                        <p class="card-text">Deskripsi Kegiatan</p>
-                            
-                        <div class="d-flex align-items-center">
-                            <a href="#" class="btn btn-primary">Selesai</a>
-                            <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-danger ms-2" onclick="deleteCard(this)"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <img src="/nuraga/images/bg.jpg" class="card-img" alt="Card Image" style="width: 100%; height: 100%; object-fit: cover;" contentEditable="true" oninput="updateCardContent(this, 'imageAlt')">
-                </div>
-            </div>
-        </div>
-    </div>
+<?php
+        // Query untuk mengambil data kegiatan dari database
+        $query = "SELECT id_kegiatan, nama_kegiatan, lokasi, tanggal_kegiatan, deskripsi_kegiatan, dokumentasi, status FROM kegiatan";
+$result = $conn->query($query);
 
-    <div class="col-md-6 mb-4">
-        <div class="card">
-            <div class="row no-gutters"> 
-                <div class="col-md-7">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Sosialisasi</h5>
-                        <p class="card-text"><i class="bi bi-geo-alt-fill"></i> Bengkong Indah 2</p>
-                        <p class="card-text"><i class="bi bi-calendar-date-fill"></i> 1 Apr 2024 - 1 Mei 2024</p>
-                        <p class="card-text">Deskripsi Kegiatan</p>
-                        <div class="d-flex align-items-center">
-                            <a href="#" class="btn btn-primary">Selesai</a>
-                            <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-danger ms-2" onclick="deleteCard(this)"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <img src="/nuraga/images/bg.jpg" class="card-img" alt="Card Image" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-            </div>
-        </div>
-    </div>
+// Periksa apakah query berhasil dijalankan
+if ($result) {
+    // Tampilkan konten HTML
+    while ($row = $result->fetch_assoc()) {
+        $id_kegiatan = $row['id_kegiatan'];
+        $nama_kegiatan = $row['nama_kegiatan'];
+        $lokasi = $row['lokasi'];
+        $tanggal_kegiatan = $row['tanggal_kegiatan'];
+        $deskripsi = $row['deskripsi_kegiatan'];
+        $dokumentasi = $row['dokumentasi'];
+        $status = $row['status'];
 
-    <div class="col-md-6 mb-4">
-        <div class="card">
-            <div class="row no-gutters"> 
-                <div class="col-md-7">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Sosialisasi</h5>
-                        <p class="card-text"><i class="bi bi-geo-alt-fill"></i> Aktivitas Virtual</p>
-                        <p class="card-text"><i class="bi bi-calendar-date-fill"></i> 1 Apr 2024 - 1 Mei 2024</p>
-                        <p class="card-text">Deskripsi Kegiatan</p>
-                        <div class="d-flex align-items-center">
-                            <a href="#" class="btn btn-primary">Selesai</a>
-                            <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-danger ms-2" onclick="deleteCard(this)"><i class="bi bi-trash"></i></button>
+        echo '<div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="row no-gutters"> 
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <h5 class="card-title text-center" contentEditable="true" oninput="updateCardContent(this, \'title\')">' . $nama_kegiatan . '</h5>
+                                <p class="card-text"><i class="bi bi-geo-alt-fill"></i> <span contentEditable="true" oninput="updateCardContent(this, \'location\')">' . $lokasi . '</span></p>
+                                <p class="card-text"><i class="bi bi-calendar-date-fill"></i> <span contentEditable="true" oninput="updateCardContent(this, \'date\')">' . $tanggal_kegiatan . '</span></p>
+                                <p class="card-text" contentEditable="true" oninput="updateCardContent(this, \'description\')">' . $deskripsi . '</p>
+                                
+                                <div class="d-flex align-items-center">
+                                    <button class="btn btn-primary" onclick="completeActivity(' . $id_kegiatan . ')">Selesai</button>
+                                    <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn btn-danger ms-2" onclick="deleteActivity(' . $id_kegiatan . ')"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <img src="/nuraga/organisasi/upload/' . $dokumentasi . '" class="card-img" alt="Card Image" style="width: 100%; height: 100%; object-fit: cover;" contentEditable="true" oninput="updateCardContent(this, \'imageAlt\')">
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5">
-                    <img src="/nuraga/images/bg.jpg" class="card-img" alt="Card Image" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-            </div>
-        </div>
-    </div>
+            </div>';
+    }
 
-    <div class="col-md-6 mb-4">
-        <div class="card">
-            <div class="row no-gutters"> 
-                <div class="col-md-7">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Sosialisasi</h5>
-                        <p class="card-text"><i class="bi bi-geo-alt-fill"></i> Bengkong Indah 2</p>
-                        <p class="card-text"><i class="bi bi-calendar-date-fill"></i> 1 Apr 2024 - 1 Mei 2024</p>
-                        <p class="card-text">Deskripsi Kegiatan</p>
-                        <div class="d-flex align-items-center">
-                            <a href="#" class="btn btn-primary">Selesai</a>
-                            <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-danger ms-2" onclick="deleteCard(this)"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <img src="/nuraga/images/bg.jpg" class="card-img" alt="Card Image" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 mb-4">
-        <div class="card">
-            <div class="row no-gutters"> 
-                <div class="col-md-7">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Sosialisasi</h5>
-                        <p class="card-text"><i class="bi bi-geo-alt-fill"></i> Bengkong Indah 2</p>
-                        <p class="card-text"><i class="bi bi-calendar-date-fill"></i> 1 Apr 2024 - 1 Mei 2024</p>
-                        <p class="card-text">Deskripsi Kegiatan</p>
-                        <div class="d-flex align-items-center">
-                            <a href="#" class="btn btn-primary">Selesai</a>
-                            <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-danger ms-2" onclick="deleteCard(this)"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <img src="/nuraga/images/bg.jpg" class="card-img" alt="Card Image" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-            </div>
-            
-        </div>
-    </div>
-    <style>
-</style>
-    <div class="col-md-6 mb-4">
-        <div class="card">
-            <div class="row no-gutters"> 
-                <div class="col-md-7">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Sosialisasi</h5>
-                        <p class="card-text"><i class="bi bi-geo-alt-fill"></i> Bengkong Indah 2</p>
-                        <p class="card-text"><i class="bi bi-calendar-date-fill"></i> 1 Apr 2024 - 1 Mei 2024</p>
-                        <p class="card-text">Deskripsi Kegiatan</p>
-                        <div class="d-flex align-items-center">
-                            <a href="#" class="btn btn-primary">Selesai</a>
-                            <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-danger ms-2" onclick="deleteCard(this)"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <img src="/nuraga/images/bg.jpg" class="card-img" alt="Card Image" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-            </div>
-        </div>
-    </div>
+    // Bebaskan hasil query
+    $result->free_result();
+} else {
+    // Tampilkan pesan jika query gagal
+    echo "Error: " . $query . "<br>" . $conn->error;
+}
+
+// Tutup koneksi ke database
+$conn->close();
+?>
 </br>
 </div>
         <style>
@@ -233,7 +144,7 @@ if ($_SESSION["userType"] !== 'organisasi') {
         // Retrieve the edited content and update the corresponding property
         const content = element.innerText;
         const card = element.closest('.card');
-        
+
         switch (property) {
             case 'title':
                 card.querySelector('.card-title').innerText = content;
@@ -250,6 +161,49 @@ if ($_SESSION["userType"] !== 'organisasi') {
             // Add more cases for other editable content
         }
     }
+
+    function completeActivity(id_kegiatan) {
+    // Menggunakan AJAX untuk mengirim permintaan ke server
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'complete_activity.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            // Handle response
+            console.log('Activity marked as completed.');
+
+            // Redirect ke laporan.php atau halaman berikutnya
+            window.location.href = 'laporan.php';
+        } else {
+            console.error('Failed to complete activity.');
+        }
+    };
+    xhr.send('id_kegiatan=' + id_kegiatan);
+}
+
+
+function deleteActivity(id_kegiatan) {
+    // Menggunakan AJAX untuk mengirim permintaan ke server
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'delete_activity.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            // Handle response
+            console.log('Activity deleted.');
+
+            // Tampilkan alert
+            alert('Data berhasil dihapus.');
+
+            // Refresh halaman setelah menampilkan alert
+            location.reload();
+        } else {
+            console.error('Failed to delete activity.');
+        }
+    };
+    xhr.send('id_kegiatan=' + id_kegiatan);
+}
+
 </script>
 
 <!-- Add a footer section if needed -->

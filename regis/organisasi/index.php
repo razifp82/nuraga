@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Melakukan escape string untuk menghindari SQL Injection
         $nama_organisasi = $conn->real_escape_string($nama_organisasi);
-        $email = $conn->real_escape_string($email);
+        $email_organisasi = $conn->real_escape_string($email_organisasi);
         $password = $conn->real_escape_string($password);
         $sosial_media = $conn->real_escape_string($sosial_media);
         $username = $conn->real_escape_string($username);
@@ -30,12 +30,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Menyiapkan query untuk menyimpan data ke dalam tabel relawan
-        $sql = "INSERT INTO organisasi (nama_organisasi, email, password, sosial_media, username, ketua_organisasi, deskripsi_organisasi) VALUES ('$nama_organisasi', '$email', '$hashed_password', '$sosial_media', '$username', '$ketua_organisasi', '$deskripsi_organisasi')";
+        $sql = "INSERT INTO organisasi (nama_organisasi, email_organisasi, password, sosial_media, username, ketua_organisasi, deskripsi_organisasi) VALUES ('$nama_organisasi', '$email_organisasi', '$hashed_password', '$sosial_media', '$username', '$ketua_organisasi', '$deskripsi_organisasi')";
 
         if ($conn->query($sql) === TRUE) {
             $success_message = "Pendaftaran berhasil! Selamat datang, $nama_organisasi!";
+            header("Location: /nuraga/index.php");
         } else {
-            $error_message = "Error: " . $sql . "<br>" . $conn->error;
+            // Cek apakah error adalah duplikasi pada kolom 'username'
+            if ($conn->errno == 1062) {
+                $error_message = "Username telah digunakan. Silakan pilih username lain.";
+            } else {
+                $error_message = "Error: " . $sql . "<br>" . $conn->error;
+            }
         }
 
         // Menutup koneksi ke database

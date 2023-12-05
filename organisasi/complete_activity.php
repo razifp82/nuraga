@@ -9,7 +9,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id_kegiatan"])) {
     $updateResult = $conn->query($updateQuery);
 
     if ($updateResult) {
-        echo "success";
+        // Jika berhasil, arahkan pengguna ke laporan.php
+        header("Location: /nuraga/organisasi/laporan.php?id_kegiatan=" . $id_kegiatan);
+        exit;
     } else {
         echo "error";
     }
