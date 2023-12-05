@@ -27,39 +27,27 @@ function login($username, $password) {
 
             // cek password verify
             
-            // Assign nama organisasi ke variabel $nama_organisasi
-        
             // Login berhasil
             $_SESSION['user'] = $username;
             $_SESSION['userType'] = $table;
  
-            
-            $_SESSION[''] = $row[''];
-            $_SESSION[''] = $row[''];
-            $_SESSION[''] = $row[''];
-
-
             // Set cookies
             setcookie('username', $username, time() + (86400 * 30), "/"); // 86400 detik = 1 hari
             setcookie('userType', $table, time() + (86400 * 30), "/");
 
             switch ($table) {
                 case 'admin':
-                    $_SESSION[''] = $row[''];
-                    $_SESSION[''] = $row[''];
-                    $_SESSION[''] = $row[''];
-                    $_SESSION[''] = $row[''];
-                    $_SESSION[''] = $row[''];
-                    $_SESSION[''] = $row[''];
+                    $_SESSION['nama'] = $row['nama'];
+                    $_SESSION['email'] = $row['email'];
+                    $_SESSION['no_telp'] = $row['no_telp'];
                     header("Location: admin/admin.php?username=".$username);
                     break;
                 case 'relawan':
-                    $_SESSION[''] = $row[''];
-                    $_SESSION[''] = $row[''];
-                    $_SESSION[''] = $row[''];
-                    $_SESSION[''] = $row[''];
-                    $_SESSION[''] = $row[''];
-                    $_SESSION[''] = $row[''];
+                    $_SESSION['nama'] = $row['nama'];
+                    $_SESSION['tanggal_lahir'] = $row['tanggal_lahir'];
+                    $_SESSION['alamat'] = $row['alamat'];
+                    $_SESSION['email'] = $row['email'];
+                    $_SESSION['jenis_kelamin'] = $row['jenis_kelamin'];
                     header("Location: relawan/relawan.php?username=".$username);
                     break;
                 case 'organisasi':

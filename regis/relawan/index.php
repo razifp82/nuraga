@@ -1,7 +1,21 @@
 <?php
 session_start();
 
-include "../.././koneksi.php";
+include "../../koneksi.php"; // Mengubah path include
+
+// Fungsi untuk memeriksa keunikkan username pada tabel tertentu
+function usernameIsUnique($username, $tableName, $conn) {
+    // Lakukan kueri untuk memeriksa keunikkan username di tabel
+    $query = "SELECT COUNT(*) as count FROM $tableName WHERE username = '$username'";
+    $result = mysqli_query($conn, $query);
+
+    // Ambil jumlah baris yang memiliki username yang sama
+    $row = mysqli_fetch_assoc($result);
+    $count = $row['count'];
+
+    // Jika count == 0, berarti username unik
+    return $count == 0;
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama = $_POST["nama"];
@@ -12,10 +26,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $alamat = $_POST["alamat"];
     $tanggal_lahir = date("Y-m-d", strtotime($_POST["tanggal_lahir"]));
 
+    // Validasi username di tingkat PHP
+    if (usernameIsUnique($username, 'admin', $conn) && usernameIsUnique($username, 'relawan', $conn) && usernameIsUnique($username, 'organisasi', $conn)) {
+        // Lanjutkan dengan proses pendaftaran
+        // ...
+    } else {
+        echo "Username sudah digunakan. Pilih username lain.";
+    }
+
     if (empty($nama) || empty($email) || empty($password) || empty($jenis_kelamin) || empty($username) || empty($alamat) || empty($tanggal_lahir)) {
         echo "<script>alert('Harap isi semua bidang.');</script>";
     } else {
-
         // Melakukan escape string untuk menghindari SQL Injection
         $nama = $conn->real_escape_string($nama);
         $email = $conn->real_escape_string($email);
@@ -42,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

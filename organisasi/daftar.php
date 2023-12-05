@@ -7,7 +7,6 @@ global $conn;
 
 $conn = connectDB();
 
-
 if (!isset($_SESSION["user"]) || !isset($_SESSION["userType"])) {
     header("location: /nuraga/login.php");
     exit;
@@ -36,6 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
     $tanggal_kegiatan = $_POST["tanggal-kegiatan"];
     $lokasi = $_POST["Lokasi"];
 
+    // Ambil nilai dari sesi nama_organisasi
+    $nama_organisasi = $_SESSION['nama_organisasi'];
+
     // Proses file dokumentasi
     $nama_file = $_FILES['dokumentasi']['name'];
     $ukuran_file = $_FILES['dokumentasi']['size'];
@@ -49,8 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
     // Pindahkan file ke direktori upload
     if (move_uploaded_file($tmp_file, $upload_path)) {
         // Implementasikan penyimpanan data ke database, sesuaikan dengan struktur tabel Anda
-        $query = "INSERT INTO kegiatan (nama_kegiatan, jenis_kegiatan, deskripsi_kegiatan, tanggal_kegiatan, lokasi, dokumentasi,organisasi) 
-                  VALUES ('$nama_kegiatan', '$jenis_kegiatan', '$deskripsi_kegiatan', '$tanggal_kegiatan', '$lokasi', '$nama_file','$id_organisasi')";
+        $query = "INSERT INTO kegiatan (nama_kegiatan, jenis_kegiatan, deskripsi_kegiatan, tanggal_kegiatan, lokasi, dokumentasi, organisasi) 
+                  VALUES ('$nama_kegiatan', '$jenis_kegiatan', '$deskripsi_kegiatan', '$tanggal_kegiatan', '$lokasi', '$nama_file', '$nama_organisasi')";
 
         if ($conn->query($query) === TRUE) {
             // Redirect ke halaman kegiatan setelah berhasil menyimpan
@@ -67,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="id">
@@ -117,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
                 <label for="tanggal">Lokasi</label>
                 <input type="text" id="Lokasi" name="Lokasi" required>
 
-                <label for="dokumentasi">Dokumentasi (file):</label>
+                <label for="dokumentasi">Poster (file):</label>
                 <input type="file" id="dokumentasi" name="dokumentasi" required>
 
                 <input type="submit" value="Submit">
