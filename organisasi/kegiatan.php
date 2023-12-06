@@ -176,14 +176,15 @@ $conn->close();
             console.log('Activity marked as completed.');
 
             // Redirect ke laporan.php atau halaman berikutnya
-            window.location.href = 'laporan.php';
+            window.location.href = 'laporan.php?id_kegiatan=' + id_kegiatan;
         } else {
             console.error('Failed to complete activity.');
         }
     };
+
+    // Perlu menambahkan ini untuk mengirim data dengan metode POST
     xhr.send('id_kegiatan=' + id_kegiatan);
 }
-
 
 function deleteActivity(id_kegiatan) {
     // Menggunakan AJAX untuk mengirim permintaan ke server
