@@ -9,19 +9,18 @@ if (!isset($_SESSION["user"]) || !isset($_SESSION["userType"])) {
 }
 
 if ($_SESSION["userType"] !== 'organisasi') {
- 
-  switch ($_SESSION["userType"]) {
-      case 'admin':
-          header("Location: /nuraga/admin/admin.php?username=" . $_SESSION["user"]);
-          break;
-      case 'relawan':
-          header("Location: /nuraga/relawan/relawan.php?username=" . $_SESSION["user"]);
-          break;
-      default:
-          header("Location: /nuraga/login.php");
-          break;
-  }
-  exit;
+    switch ($_SESSION["userType"]) {
+        case 'admin':
+            header("Location: /nuraga/admin/admin.php?username=" . $_SESSION["user"]);
+            break;
+        case 'relawan':
+            header("Location: /nuraga/relawan/relawan.php?username=" . $_SESSION["user"]);
+            break;
+        default:
+            header("Location: /nuraga/login.php");
+            break;
+    }
+    exit;
 }
 
 // Di dalam blok yang menangani POST request
@@ -40,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($insertResult) {
             // Jika berhasil, arahkan pengguna ke halaman organisasi.php atau kegiatan.php
-            header("Location: /nuraga/organisasi/organisasi.php");
+            header("Location: /nuraga/organisasi/organisasi.php?success=true");
             exit;
         } else {
             echo "Error: " . $insertQuery . "<br>" . $conn->error;
@@ -59,6 +58,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>laporan kegiatan</title>
     <link rel="stylesheet" href="style.css">
+    <?php
+        // Cek apakah parameter 'success' ada pada URL
+        if (isset($_GET['success'])) {
+            // Jika 'success' bernilai true, tampilkan alert
+            if ($_GET['success'] === 'true') {
+                echo 'alert("Laporan kegiatan berhasil dikirim!");';
+            }
+        }
+        ?>
 </head>
 <body>
 <header>

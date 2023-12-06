@@ -23,6 +23,8 @@ if ($_SESSION["userType"] !== 'relawan') {
     }
     exit;
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -35,6 +37,28 @@ if ($_SESSION["userType"] !== 'relawan') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8H+0aNCIn1w4/4RM79XEOGQl47c4sDO/MEbqmbek5B+6EAg1PTXBRQDbh8Rw" crossorigin="anonymous"></script>
+    <script>
+    function completeActivity(id_kegiatan, action) {
+        // Lakukan AJAX request untuk menyimpan atau menghapus data ke tabel daftar
+        fetch('complete_activity.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id_kegiatan=' + id_kegiatan + '&action=' + action,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Berhasil ' + (action === 'add' ? 'gabung ke' : 'keluar dari') + ' kegiatan!');
+                location.reload();
+            } else {
+                alert('Gagal ' + (action === 'add' ? 'gabung ke' : 'keluar dari') + ' kegiatan!');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
 
     <style>
         body {
@@ -86,7 +110,6 @@ if ($_SESSION["userType"] !== 'relawan') {
 
             // Periksa apakah query berhasil dijalankan
             if ($result) {
-                // Tampilkan konten HTML
                 while ($row = $result->fetch_assoc()) {
                     $id_kegiatan = $row['id_kegiatan'];
                     $nama_kegiatan = $row['nama_kegiatan'];
@@ -96,7 +119,14 @@ if ($_SESSION["userType"] !== 'relawan') {
                     $deskripsi = $row['deskripsi_kegiatan'];
                     $dokumentasi = $row['dokumentasi'];
                     $status = $row['status'];
-
+            
+                    // Cek apakah pengguna sudah gabung ke kegiatan atau belum
+                    $query_check = "SELECT * FROM daftar WHERE id_kegiatan = '$id_kegiatan' AND id_relawan = '{$_SESSION['id_relawan']}'";
+                    $result_check = $conn->query($query_check);
+            
+                    $buttonText = $result_check && $result_check->num_rows > 0 ? "Keluar Kegiatan" : "Gabung Kegiatan";
+                    $buttonAction = $result_check && $result_check->num_rows > 0 ? "remove" : "add";
+            
                     echo '<div class="col-md-6 mb-4">
                             <div class="card">
                                 <div class="row no-gutters"> 
@@ -108,7 +138,7 @@ if ($_SESSION["userType"] !== 'relawan') {
                                             <p class="card-text"><i class="bi bi-calendar-date-fill"></i> <span contentEditable="true" oninput="updateCardContent(this, \'date\')">' . $tanggal_kegiatan . '</span></p>
                                             <p class="card-text" contentEditable="true" oninput="updateCardContent(this, \'description\')">' . $deskripsi . '</p>
                                             <div class="d-flex align-items-center">
-                                                <button class="btn btn-primary" onclick="completeActivity(' . $id_kegiatan . ')">Gabung</button>
+                                                <button class="btn btn-primary" onclick="completeActivity(' . $id_kegiatan . ', \'' . $buttonAction . '\')">' . $buttonText . '</button>
                                             </div>
                                         </div>
                                     </div>
@@ -119,6 +149,7 @@ if ($_SESSION["userType"] !== 'relawan') {
                             </div>
                         </div>';
                 }
+                
 
                 // Bebaskan hasil query
                 $result->free_result();

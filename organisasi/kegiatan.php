@@ -95,7 +95,7 @@ if ($result) {
                                 
                                 <div class="d-flex align-items-center">
                                     <button class="btn btn-primary" onclick="completeActivity(' . $id_kegiatan . ')">Selesai</button>
-                                    <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn btn-warning ms-2" onclick="editCard(' . $id_kegiatan . ')"><i class="bi bi-pencil"></i></button>
                                     <button class="btn btn-danger ms-2" onclick="deleteActivity(' . $id_kegiatan . ')"><i class="bi bi-trash"></i></button>
                                 </div>
                             </div>
@@ -185,6 +185,11 @@ $conn->close();
     // Perlu menambahkan ini untuk mengirim data dengan metode POST
     xhr.send('id_kegiatan=' + id_kegiatan);
 }
+
+function editCard(id_kegiatan) {
+        // Redirect ke halaman ubah.php dengan parameter id_kegiatan
+        window.location.href = 'ubah.php?id_kegiatan=' + id_kegiatan;
+    }
 
 function deleteActivity(id_kegiatan) {
     // Menggunakan AJAX untuk mengirim permintaan ke server

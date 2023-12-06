@@ -3,6 +3,9 @@ session_start();
 
 include ".././koneksi.php";
 
+$query = "SELECT * FROM kegiatan WHERE status = 'selesai'";
+$result = $conn->query($query);
+
 if (!isset($_SESSION["user"]) || !isset($_SESSION["userType"])) {
     header("location: /nuraga/login.php");
     exit;
@@ -31,6 +34,7 @@ if ($_SESSION["userType"] !== 'relawan') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <title>NURAGA</title>
     <link rel="icon" href="images/logo/icon.pth.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
@@ -44,6 +48,8 @@ if ($_SESSION["userType"] !== 'relawan') {
                     <li><a href="#programs">Program</a></li>
                     <li><a href="#about">Tentang Kami</a></li>
                     <li><a href="kegiatan.php">Cari Kegiatan</a></li>
+                    <li><?php
+                    include'notif.php' ?></li>
                     <li><a href="logout.php">logout</a></li>
                 </ul>
             </nav>
@@ -63,69 +69,41 @@ if ($_SESSION["userType"] !== 'relawan') {
 
 ?>
 
-    <section id="programs">
+<section id="programs">
         <div class="program-content">
-        <section class="articles">
-  <article>
-    <div class="article-wrapper">
-      <figure>
-        <img src="https://picsum.photos/id/1011/800/450" alt="" />
-      </figure>
-      <div class="article-body">
-        <h2>This is some title</h2>
-        <p>
-          Curabitur convallis ac quam vitae laoreet. Nulla mauris ante, euismod sed lacus sit amet, congue bibendum eros. Etiam mattis lobortis porta. Vestibulum ultrices iaculis enim imperdiet egestas.
-        </p>
-        <a href="#" class="read-more">
-          Read more <span class="sr-only">about this is some title</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-        </a>
-      </div>
-    </div>
-  </article>
-  <article>
-
-    <div class="article-wrapper">
-      <figure>
-        <img src="https://picsum.photos/id/1005/800/450" alt="" />
-      </figure>
-      <div class="article-body">
-        <h2>This is some title</h2>
-        <p>
-          Curabitur convallis ac quam vitae laoreet. Nulla mauris ante, euismod sed lacus sit amet, congue bibendum eros. Etiam mattis lobortis porta. Vestibulum ultrices iaculis enim imperdiet egestas.
-        </p>
-        <a href="#" class="read-more">
-          Read more <span class="sr-only">about this is some title</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-        </a>
-      </div>
-    </div>
-  </article>
-  <article>
-
-    <div class="article-wrapper">
-      <figure>
-        <img src="https://picsum.photos/id/103/800/450" alt="" />
-      </figure>
-      <div class="article-body">
-        <h2>This is some title</h2>
-        <p>
-          Curabitur convallis ac quam vitae laoreet. Nulla mauris ante, euismod sed lacus sit amet, congue bibendum eros. Etiam mattis lobortis porta. Vestibulum ultrices iaculis enim imperdiet egestas.
-        </p>
-        <a href="#" class="read-more">
-          Read more <span class="sr-only">about this is some title</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-        </a>
-      </div>
-    </div>
-  </article>
-</section>
+            <section class="articles">
+                <?php
+                // Loop melalui hasil query dan menampilkan data kegiatan
+                while ($row = $result->fetch_assoc()) {
+                    $nama_kegiatan = $row['nama_kegiatan'];
+                    $deskripsi_kegiatan = $row['deskripsi_kegiatan'];
+                    $dokumentasi = $row['dokumentasi'];
+                ?>
+                    <article>
+                        <div class="article-wrapper">
+                            <figure>
+                                <img src="/nuraga/organisasi/upload/<?php echo $dokumentasi; ?>" alt="" />
+                            </figure>
+                            <div class="article-body">
+                                <h2><?php echo $nama_kegiatan; ?></h2>
+                                <p>
+                                    <?php echo $deskripsi_kegiatan; ?>
+                                </p>
+                                <a href="#" class="read-more">
+                                    Read more <span class="sr-only">about <?php echo $nama_kegiatan; ?></span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                <?php
+                }
+                ?>
+            </section>
+        </div>
+    </section>
         </div>
     </section>
 

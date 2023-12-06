@@ -43,6 +43,7 @@ function login($username, $password) {
                     header("Location: admin/admin.php?username=".$username);
                     break;
                 case 'relawan':
+                    $_SESSION['id_relawan'] = $row['id_relawan'];
                     $_SESSION['nama'] = $row['nama'];
                     $_SESSION['tanggal_lahir'] = $row['tanggal_lahir'];
                     $_SESSION['alamat'] = $row['alamat'];
