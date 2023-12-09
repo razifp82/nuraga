@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $deskripsi_organisasi = $_POST["deskripsi_organisasi"];
 
     if (empty($nama_organisasi) || empty($email_organisasi) || empty($password) || empty($sosial_media) || empty($username) || empty($ketua_organisasi) || empty($deskripsi_organisasi)) {
-        $error_message = "Harap isi semua bidang.";
+        echo '<script>alert("Harap isi semua bidang.");</script>';
     } else {
         // Membuat koneksi ke database
 
@@ -33,14 +33,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO organisasi (nama_organisasi, email_organisasi, password, sosial_media, username, ketua_organisasi, deskripsi_organisasi) VALUES ('$nama_organisasi', '$email_organisasi', '$hashed_password', '$sosial_media', '$username', '$ketua_organisasi', '$deskripsi_organisasi')";
 
         if ($conn->query($sql) === TRUE) {
-            $success_message = "Pendaftaran berhasil! Selamat datang, $nama_organisasi!";
+            echo '<script>alert("Pendaftaran berhasil! Selamat datang, ' . $nama_organisasi . '!");</script>';
             header("Location: /nuraga/index.php");
         } else {
             // Cek apakah error adalah duplikasi pada kolom 'username'
             if ($conn->errno == 1062) {
-                $error_message = "Username telah digunakan. Silakan pilih username lain.";
+                echo '<script>alert("Username telah digunakan. Silakan pilih username lain.");</script>';
             } else {
-                $error_message = "Error: " . $sql . "<br>" . $conn->error;
+                echo '<script>alert("Error: ' . $sql . '\\n' . $conn->error . '");</script>';
             }
         }
 
@@ -49,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

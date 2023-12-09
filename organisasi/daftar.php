@@ -37,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
 
     // Ambil nilai dari sesi nama_organisasi
     $nama_organisasi = $_SESSION['nama_organisasi'];
+    $id_organisasi = $_SESSION['id_organisasi'];
 
     // Proses file dokumentasi
     $nama_file = $_FILES['dokumentasi']['name'];
@@ -51,11 +52,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
     // Pindahkan file ke direktori upload
     if (move_uploaded_file($tmp_file, $upload_path)) {
         // Implementasikan penyimpanan data ke database, sesuaikan dengan struktur tabel Anda
-        $query = "INSERT INTO kegiatan (nama_kegiatan, jenis_kegiatan, deskripsi_kegiatan, tanggal_kegiatan, lokasi, dokumentasi, organisasi) 
-                  VALUES ('$nama_kegiatan', '$jenis_kegiatan', '$deskripsi_kegiatan', '$tanggal_kegiatan', '$lokasi', '$nama_file', '$nama_organisasi')";
+        $query = "INSERT INTO kegiatan (nama_kegiatan, jenis_kegiatan, deskripsi_kegiatan, tanggal_kegiatan, lokasi, dokumentasi, organisasi ,id_organisasi) 
+                  VALUES ('$nama_kegiatan', '$jenis_kegiatan', '$deskripsi_kegiatan', '$tanggal_kegiatan', '$lokasi', '$nama_file', '$nama_organisasi','$id_organisasi')";
 
         if ($conn->query($query) === TRUE) {
             // Redirect ke halaman kegiatan setelah berhasil menyimpan
+            echo '<script>alert("Kegiatan berhasil disimpan!");</script>';
             header("Location: /nuraga/organisasi/organisasi.php?username=" . $_SESSION["user"]);
             exit;
         } else {
@@ -71,6 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
 ?>
 
 
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -78,10 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Nuraga</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
-        crossorigin="anonymous">
-    
+    <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/bg.jpg" type="image/x-icon">
 </head>
@@ -105,22 +105,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
         <div class="login">
             <br>
             <form method="POST" enctype="multipart/form-data">
-                <label for="nama-kegiatan">Nama Kegiatan:</label>
+                <label style="color: white;" for="nama-kegiatan">Nama Kegiatan:</label>
                 <input type="text" id="nama-kegiatan" name="nama-kegiatan" required>
 
-                <label for="jenis-kegiatan">Jenis Kegiatan:</label>
-                <input type="text" id="jenis-kegiatan" name="jenis-kegiatan" required>
+                <label style="color: white;" for="jenis-kegiatan">Jenis Kegiatan:</label>
+                <div class="select_mate" data-mate-select="active" >
+                <select name="jenis-kegiatan" id="jenis-kegiatan" onchange="" onclick="return false;" id="">
+                     <option disabled="disabled" selected="selected">Pilih Jenis Kegiatan</option>
+                    <option value="donasi">Donasi</option>
+                    <option value="kerja sosial">Kerja Sosial</option>
+                    <option value="penggalangan dana">Penggalangan Dana</option>
+                    <option value="bakti sosial">Bakti Sosial</option>
+                    <option value="relawan">Relawan</option>
+                </select>
+                <p class="selecionado_opcion"  onclick="open_select(this)" ></p><span onclick="open_select(this)" class="icon_select_mate" ><svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"/>
+                    <path d="M0-.75h24v24H0z" fill="none"/>
+                </svg></span>
+                <div class="cont_list_select_mate">
+                <ul class="cont_select_int">  </ul> 
+                </div>
+                </div>
+                <br><br><br>
 
-                <label for="deskripsi-kegiatan">Deskripsi Kegiatan:</label>
+                <label style="color: white;" for="deskripsi-kegiatan">Deskripsi Kegiatan:</label>
                 <textarea id="deskripsi-kegiatan" name="deskripsi-kegiatan" required></textarea>
 
-                <label for="tanggal-kegiatan">Tanggal Kegiatan:</label>
+                <label style="color: white;" for="tanggal-kegiatan">Tanggal Kegiatan:</label>
                 <input type="date" id="tanggal-kegiatan" name="tanggal-kegiatan" required>
 
-                <label for="tanggal">Lokasi</label>
+                <label style="color: white;" for="tanggal">Lokasi</label>
                 <input type="text" id="Lokasi" name="Lokasi" required>
 
-                <label for="dokumentasi">Poster (file):</label>
+                <label style="color: white;" for="dokumentasi">Poster (file):</label>
                 <input type="file" id="dokumentasi" name="dokumentasi" required>
 
                 <input type="submit" value="Submit">

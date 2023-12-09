@@ -80,7 +80,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>laporan kegiatan</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">    
+    <script src="script.js"></script>
+
 </head>
 <body>
 <header>
@@ -113,23 +115,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $kegiatan = $result->fetch_assoc();
             ?>
                     <br>
-                    <form method="POST" enctype="multipart/form-data" action="">
-                        <label for="nama-kegiatan">Nama Kegiatan:</label>
+                    <form method="POST" enctype="multipart/form-data" action="" class="putih">
+                        <label style="color: white;" for="nama-kegiatan">Nama Kegiatan:</label>
                         <input type="text" id="nama-kegiatan" name="nama-kegiatan" value="<?php echo $kegiatan['nama_kegiatan']; ?>" required>
 
-                        <label for="jenis-kegiatan">Jenis Kegiatan:</label>
-                        <input type="text" id="jenis-kegiatan" name="jenis-kegiatan" value="<?php echo $kegiatan['jenis_kegiatan']; ?>" required>
+                        <label style="color: white;" for="jenis-kegiatan">Jenis Kegiatan:</label>
 
-                        <label for="deskripsi-kegiatan">Deskripsi Kegiatan:</label>
+                        <div class="select_mate" data-mate-select="active" >
+                <select name="jenis-kegiatan" id="jenis-kegiatan" onchange="" onclick="return false;" id="">
+                     <option disabled="disabled" selected="selected">Pilih Jenis Kegiatan</option>
+                    <option value="donasi">Donasi</option>
+                    <option value="kerja sosial">Kerja Sosial</option>
+                    <option value="penggalangan dana">Penggalangan Dana</option>
+                    <option value="bakti sosial">Bakti Sosial</option>
+                    <option value="relawan">Relawan</option>
+                </select>
+                <p class="selecionado_opcion"  onclick="open_select(this)" ></p><span onclick="open_select(this)" class="icon_select_mate" ><svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"/>
+                    <path d="M0-.75h24v24H0z" fill="none"/>
+                </svg></span>
+                <div class="cont_list_select_mate">
+                <ul class="cont_select_int">  </ul> 
+                </div>
+                </div>
+                <br><br><br>
+
+                        <label style="color: white;" for="deskripsi-kegiatan">Deskripsi Kegiatan:</label>
                         <textarea id="deskripsi-kegiatan" name="deskripsi-kegiatan" required><?php echo $kegiatan['deskripsi_kegiatan']; ?></textarea>
 
-                        <label for="tanggal-kegiatan">Tanggal Kegiatan:</label>
+                        <label style="color: white;" for="tanggal-kegiatan">Tanggal Kegiatan:</label>
                         <input type="date" id="tanggal-kegiatan" name="tanggal-kegiatan" value="<?php echo $kegiatan['tanggal_kegiatan']; ?>" required>
 
-                        <label for="Lokasi">Lokasi</label>
+                        <label style="color: white;" for="Lokasi">Lokasi</label>
                         <input type="text" id="Lokasi" name="Lokasi" value="<?php echo $kegiatan['lokasi']; ?>" required>
 
-                        <label for="dokumentasi">Poster (file):</label>
+                        <label style="color: white;" for="dokumentasi">Poster (file):</label>
                         <input type="file" id="dokumentasi" name="dokumentasi" required>
 
                         <input type="submit" value="Submit">

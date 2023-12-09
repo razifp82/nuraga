@@ -48,12 +48,13 @@ if ($_SESSION["userType"] !== 'relawan') {
                     <li><a href="#programs">Program</a></li>
                     <li><a href="#about">Tentang Kami</a></li>
                     <li><a href="kegiatan.php">Cari Kegiatan</a></li>
-                    <li><?php
-                    include'notif.php' ?></li>
-                    <li><a href="logout.php">logout</a></li>
+                   
                 </ul>
             </nav>
-	
+            <li class="mamak"><?php
+                    include'notif.php'?></li>
+                   <li class="mamak"><?php
+                    include'profil.php' ?></li>
     </header>
 
     <section id="hero" >

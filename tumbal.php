@@ -1,230 +1,126 @@
-<?php
-session_start();
-
-include ".././koneksi.php";
-
-// ...
-
-if ($_SESSION["userType"] !== 'organisasi') {
-    switch ($_SESSION["userType"]) {
-        case 'admin':
-            header("Location: /nuraga/admin/admin.php?username=" . $_SESSION["user"]);
-            break;
-        case 'relawan':
-            header("Location: /nuraga/relawan/relawan.php?username=" . $_SESSION["user"]);
-            break;
-        default:
-            header("Location: /nuraga/login.php");
-            break;
-    }
-    exit;
-}
-?>
-
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NURAGA</title>
-    <link rel="icon" href="images/logo/icon.pth.png" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8H+0aNCIn1w4/4RM79XEOGQl47c4sDO/MEbqmbek5B+6EAg1PTXBRQDbh8Rw" crossorigin="anonymous"></script>
-
-    <style>
-        body {
-            background-color: #f8f9fa; /* Light gray background color */
-        }
-    </style>
-
+    <title>beranda relawan</title>
+    <link rel="icon" href="icon.pth.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-        <a class="logo" href="organisasi.php"><img src="/nuraga/images/logo/logo.pth.png" height="50px" alt="logo"></a>
-            <nav>
-                <ul class="nav__links">
-                    <li><a href="organisasi.php">Beranda</a></li>
-                    <li><a href="organisasi.php">Program</a></li>
-                    <li><a href="organisasi.php">Tentang Kami</a></li>
-                    <li><a href="daftar.php">Buat Kegiatan</a></li>
-                    <li><a href="kegiatan.php">Kegiatan saya</a></li>
-                    <li><a href="logout.php">Logout</a></li>
-                </ul>
-            </nav>
-	
-    </header>
-    <div class="container my-3">
-   
-
-<br>
-
-</br>
-
-<div class="row">
-<?php
-        // Query untuk mengambil data kegiatan dari database
-        $query = "SELECT id_kegiatan, nama_kegiatan, lokasi, tanggal_kegiatan, deskripsi_kegiatan, dokumentasi, status FROM kegiatan";
-$result = $conn->query($query);
-
-// Periksa apakah query berhasil dijalankan
-if ($result) {
-    // Tampilkan konten HTML
-    while ($row = $result->fetch_assoc()) {
-        $id_kegiatan = $row['id_kegiatan'];
-        $nama_kegiatan = $row['nama_kegiatan'];
-        $lokasi = $row['lokasi'];
-        $tanggal_kegiatan = $row['tanggal_kegiatan'];
-        $deskripsi = $row['deskripsi_kegiatan'];
-        $dokumentasi = $row['dokumentasi'];
-        $status = $row['status'];
-
-        echo '<div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="row no-gutters"> 
-                        <div class="col-md-7">
-                            <div class="card-body">
-                                <h5 class="card-title text-center" contentEditable="true" oninput="updateCardContent(this, \'title\')">' . $nama_kegiatan . '</h5>
-                                <p class="card-text"><i class="bi bi-geo-alt-fill"></i> <span contentEditable="true" oninput="updateCardContent(this, \'location\')">' . $lokasi . '</span></p>
-                                <p class="card-text"><i class="bi bi-calendar-date-fill"></i> <span contentEditable="true" oninput="updateCardContent(this, \'date\')">' . $tanggal_kegiatan . '</span></p>
-                                <p class="card-text" contentEditable="true" oninput="updateCardContent(this, \'description\')">' . $deskripsi . '</p>
-                                
-                                <div class="d-flex align-items-center">
-                                    <button class="btn btn-primary" onclick="completeActivity(' . $id_kegiatan . ')">Selesai</button>
-                                    <button class="btn btn-warning ms-2" onclick="editCard(this)"><i class="bi bi-pencil"></i></button>
-                                    <button class="btn btn-danger ms-2" onclick="deleteActivity(' . $id_kegiatan . ')"><i class="bi bi-trash"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <img src="/nuraga/organisasi/upload/' . $dokumentasi . '" class="card-img" alt="Card Image" style="width: 100%; height: 100%; object-fit: cover;" contentEditable="true" oninput="updateCardContent(this, \'imageAlt\')">
-                        </div>
-                    </div>
+    <header>
+        
+<div class = "icons">
+<a href = "/nuraga/images/notif.png"><i class="fas fa-archive"></i></a>
+<div class = "notification">
+  <a href = "#">
+  <div class = "notBtn" href = "#">
+    <!--Number supports double digets and automaticly hides itself when there is nothing between divs -->
+    <div class = "number">2</div>
+    <i class="fas fa-bell"></i>
+      <div class = "box">
+        <div class = "display">
+          <div class = "nothing"> 
+            <i class="fas fa-child stick"></i> 
+            <div class = "cent">Looks Like your all caught up!</div>
+          </div>
+          <div class = "cont"><!-- Fold this div and try deleting evrything inbetween -->
+             <div class = "sec new">
+               <a href = "https://codepen.io/Golez/">
+               <div class = "profCont">
+               <img class = "profile" src = "https://c1.staticflickr.com/5/4007/4626436851_5629a97f30_b.jpg">
                 </div>
-            </div>';
-    }
-
-    // Bebaskan hasil query
-    $result->free_result();
-} else {
-    // Tampilkan pesan jika query gagal
-    echo "Error: " . $query . "<br>" . $conn->error;
-}
-
-// Tutup koneksi ke database
-$conn->close();
-?>
-</br>
+               <div class = "txt">James liked your post: "Pure css notification box"</div>
+              <div class = "txt sub">11/7 - 2:30 pm</div>
+               </a>
+            </div>
+             <div class = "sec new">
+               <a href = "https://codepen.io/Golez/">
+               <div class = "profCont">
+               <img class = "profile" src = "https://obamawhitehouse.archives.gov/sites/obamawhitehouse.archives.gov/files/styles/person_medium_photo/public/person-photo/amanda_lucidon22.jpg?itok=JFPi8OFJ">
+                </div>
+               <div class = "txt">Annita liked your post: "Pure css notification box"</div>
+              <div class = "txt sub">11/7 - 2:13 pm</div>
+               </a>
+            </div>
+             <div class = "sec">
+               <a href = "https://codepen.io/Golez/">
+               <div class = "profCont">
+               <img class = "profile" src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3O45RK9qyCrZJivYsY6PmeVEJH07l7bkoolJmscBsNjzump27">
+                </div>
+               <div class = "txt">Brie liked your post: "Pure css notification box"</div>
+              <div class = "txt sub">11/6 - 9:35 pm</div>
+               </a>
+            </div>
+             <div class = "sec">
+               <a href = "https://codepen.io/Golez/">
+               <div class = "profCont">
+               <img class = "profile" src = "https://c1.staticflickr.com/4/3725/10214643804_75c0b6eeab_b.jpg">
+                </div>
+               <div class = "txt">Madison liked your post: "Pure css notification box"</div>
+              <div class = "txt sub">11/6 - 4:04 pm</div>
+               </a>
+            </div>
+             <div class = "sec">
+               <a href = "https://codepen.io/Golez/">
+               <div class = "profCont">
+               <img class = "profile" src="https://upload.wikimedia.org/wikipedia/commons/5/52/NG_headshot_white_shirt_square_Jan18.jpg">
+                </div>
+               <div class = "txt">Ted liked your post: "Pure css notification box"</div>
+              <div class = "txt sub">11/6 - 10:37 am</div>
+               </a>
+            </div>
+             <div class = "sec">
+               <a href = "https://codepen.io/Golez/">
+               <div class = "profCont">
+               <img class = "profile" src = "https://upload.wikimedia.org/wikipedia/commons/d/dd/Pat-headshot-square.jpg">
+                </div>
+               <div class = "txt">Tommas liked your post: "Pure css notification box"</div>
+              <div class = "txt sub">11/5 - 7:30 pm</div>
+               </a>
+            </div>
+             <div class = "sec">
+               <a href = "https://codepen.io/Golez/">
+               <div class = "profCont">
+               <img class = "profile" src = "https://c1.staticflickr.com/8/7407/13785133614_6254abb8c4.jpg">
+                </div>
+               <div class = "txt">Claire liked your post: "Pure css notification box"</div>
+              <div class = "txt sub">11/5 - 2:30 pm</div>
+               </a>
+            </div>
+             <div class = "sec">
+               <a href = "https://codepen.io/Golez/">
+               <div class = "profCont">
+               <img class = "profile" src = "//c1.staticflickr.com/1/185/440890151_54c5b920b0_b.jpg">
+                </div>
+               <div class = "txt">Jerimaiah liked your post: "Pure css notification box"</div>
+              <div class = "txt sub">11/5 - 1:34 pm</div>
+               </a>
+            </div>
+             <div class = "sec">
+               <a href = "https://codepen.io/Golez/">
+               <div class = "profCont">
+               <img class = "profile" src = "//c2.staticflickr.com/4/3397/3585544855_28442029a5_z.jpg?zz=1">
+                </div>
+               <div class = "txt">Debra liked your post: "Pure css notification box"</div>
+              <div class = "txt sub">11/5 - 10:20 am</div>
+               </a>
+            </div>
+         </div>
+        </div>
+     </div>
+  </div>
+    </a>
 </div>
-        <style>
-    body {
-        background-image: url('/nuraga/images/bg.jpg');
-        background-size: cover; /* Adjust the size to cover the entire background */
-        background-position: center; /* Center the background image */
-        background-repeat: no-repeat; /* Prevent the background image from repeating */
-    }
-</style>
-    <!-- Add your content here, such as cards or a list of activities -->
-    <div class="row">
-        <div class="col-md-5">
-            <!-- Your content goes here -->
-        </div>  
-        <div class="col-md-5">
-            <!-- Your content goes here -->
-        </div>
-        <div class="col-md-5">
-            <!-- Your content goes here -->
-        </div>
-    </div>
+<a href = "#"><i class="fas fa-edit"></i></a>
 </div>
-<!-- Add this script to your page -->
-<script>
-    function updateCardContent(element, property) {
-        // Retrieve the edited content and update the corresponding property
-        const content = element.innerText;
-        const card = element.closest('.card');
-
-        switch (property) {
-            case 'title':
-                card.querySelector('.card-title').innerText = content;
-                break;
-            case 'location':
-                card.querySelector('.card-text i.bi-geo-alt-fill + span').innerText = content;
-                break;
-            case 'date':
-                card.querySelector('.card-text i.bi-calendar-date-fill + span').innerText = content;
-                break;
-            case 'imageAlt':
-                card.querySelector('.card-img').alt = content;
-                break;
-            // Add more cases for other editable content
-        }
-    }
-
-    function completeActivity(id_kegiatan) {
-    // Menggunakan AJAX untuk mengirim permintaan ke server
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'complete_activity.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            // Handle response
-            console.log('Activity marked as completed.');
-
-            // Redirect ke laporan.php atau halaman berikutnya
-            window.location.href = 'laporan.php';
-        } else {
-            console.error('Failed to complete activity.');
-        }
-    };
-    xhr.send('id_kegiatan=' + id_kegiatan);
-}
 
 
-function deleteActivity(id_kegiatan) {
-    // Menggunakan AJAX untuk mengirim permintaan ke server
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'delete_activity.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            // Handle response
-            console.log('Activity deleted.');
+        </header>
+    
+        
 
-            // Tampilkan alert
-            alert('Data berhasil dihapus.');
-
-            // Refresh halaman setelah menampilkan alert
-            location.reload();
-        } else {
-            console.error('Failed to delete activity.');
-        }
-    };
-    xhr.send('id_kegiatan=' + id_kegiatan);
-}
-
-</script>
-
-<!-- Add a footer section if needed -->
-<section id="contact">  
-        <div class="contact-content">
-            <h2>Kontak</h2>
-            <p>Email: nuraga@gmail.com</p>
-            <p>Telepon: 123-456-7890</p>
-        </div>
-    </section>
-
-    <footer>
-        <p>Hak Cipta &copy; 2023 NURAGA</p>
-    </footer>
-<style>
-    .card-text i.bi-geo-alt-fill,
-    .card-text i.bi-calendar-date-fill {
-        color: #e74c3c;
-    }
-</style>
-
+    
+    
 </body>
 </html>
-    

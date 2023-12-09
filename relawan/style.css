@@ -25,6 +25,13 @@ body {
     padding: 30px 10%;
     background-color: #d61212;
   }
+  .header2 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 30px 10%;
+    background-color: #d61212;
+  }
   
   .logo {
     margin-right: auto;
@@ -113,7 +120,7 @@ body {
   }
   .overlay .close {
     position: absolute;
-    top: 20px;a
+    top: 20px;
     right: 45px;
     font-size: 60px;
     color: #edf0f1;
@@ -406,27 +413,163 @@ article:has(:hover, :focus) {
     object-fit: cover;
   }
 }
-.search-container {
-    display: flex;
+
+
+
+.dropdown {
+  display: inline-block;
+  position: relative;
+ }
+
+ .dropdown-option {
+  display: none;
+  position: absolute;
+  overflow: auto;
+  padding: 20px;
+  width: 190px;
+ }
+ .dropdown-option > li {
+list-style: none;
+list-style-type: none;
+ }
+
+ .dropdown:hover .dropdown-option {
+  display: block;
+  font-size: large;
+  overflow: auto;
+  background-color: #d61212;
+  border-radius:5px;
+  box-shadow: 10px 10px 10px 10px rgba(63, 7, 7, 0.4);
+  text-decoration: none;
+  border-radius: 20px; 
+ }
+
+ .dropdown-option .logout-img {
+  width: 30px;
+  height: 20px;
+ }
+
+ .mamak{
+  list-style: none;
+  list-style-type: none;
+ }
+ 
+ .putih{
+  color: #fff;
+ }
+
+ .dropdown2 {
+  display: inline-block;
+  position: relative;
 }
 
-#search {
-    width: 70%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px;
-    outline: none;
+.dropdown-option2 {
+  display: none;
+  position: absolute;
+  right: 10px; /* Menggeser dropdown ke kanan */
+  overflow: auto;
+  padding: 10px;
+  width: 500px;
+  color: hsl(0, 0%, 100%); /* Sesuaikan warna teks sesuai kebutuhan */
 }
 
-button {
-    padding: 10px;
-    background-color: rgb(13, 110, 253);
-    color: white;
-    border: 1px solid rgb(13, 110, 253);
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
+.dropdown-option2 > li {
+  list-style: none;
 }
 
-button:hover {
-    background-color: rgb(13, 110, 253);
+.dropdown2:hover .dropdown-option2 {
+  display: block;
+  font-size: large;
+  background-color: #d61212;
+  border-radius: 5px;
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.4);
+  text-decoration: none;
+  border-radius: 20px;
 }
+
+
+ .dropdown-option2 .logout-img2 {
+  width: 30px;
+  height: 20px;
+ }
+ 
+ .notification-active {
+  background-color: #d61212;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+
+.search-container3 {
+  width: 640px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 10px ; /* Tengahkan container */
+}
+
+.search-input3 {
+  width: 400px; /* Ubah lebar input menjadi 60% dari container */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.search-btn3 {
+  padding: 10px 15px;
+  background-color: #007bff; /* Warna tombol */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+
+}
+
+.search-btn3:hover {
+  background-color: #0056b3; /* Warna tombol hover */
+}
+
+.dropdown3 {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.dropdown-content3 {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 5px;
+  padding: 8px 0;
+}
+
+.dropdown-content3 a {
+  color: #333;
+  padding: 10px 16px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s;
+}
+
+.dropdown-content3 a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown3:hover .dropdown-content3 {
+  display: block;
+}
+
+.dropdown3:hover .search-btn3 {
+  background-color: #0056b3;
+}
+
+

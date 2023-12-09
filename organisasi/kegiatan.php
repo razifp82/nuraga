@@ -27,12 +27,12 @@ if ($_SESSION["userType"] !== 'organisasi') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NURAGA</title>
-    <link rel="icon" href="images/logo/icon.pth.png" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="icon" href="/nurarga/images/logo/icon.pth.png" type="image/x-icon">
+   
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8H+0aNCIn1w4/4RM79XEOGQl47c4sDO/MEbqmbek5B+6EAg1PTXBRQDbh8Rw" crossorigin="anonymous"></script>
-
+  
     <style>
         body {
             background-color: #f8f9fa; /* Light gray background color */
@@ -64,9 +64,8 @@ if ($_SESSION["userType"] !== 'organisasi') {
 
 <div class="row">
 <?php
-$nama_organisasi = $_SESSION["user"];
-        // Query untuk mengambil data kegiatan dari database
-        $query = "SELECT id_kegiatan, nama_kegiatan, lokasi, tanggal_kegiatan, deskripsi_kegiatan, dokumentasi, status 
+$nama_organisasi = $_SESSION["nama_organisasi"];
+$query = "SELECT id_kegiatan, nama_kegiatan, lokasi, tanggal_kegiatan, deskripsi_kegiatan, jenis_kegiatan, dokumentasi, status 
           FROM kegiatan 
           WHERE organisasi = '$nama_organisasi'";
 $result = $conn->query($query);
@@ -76,36 +75,41 @@ if ($result) {
     // Tampilkan konten HTML
     while ($row = $result->fetch_assoc()) {
         $id_kegiatan = $row['id_kegiatan'];
-        $nama_kegiatan = $row['nama_kegiatan'];
-        $lokasi = $row['lokasi'];
-        $tanggal_kegiatan = $row['tanggal_kegiatan'];
-        $deskripsi = $row['deskripsi_kegiatan'];
-        $dokumentasi = $row['dokumentasi'];
-        $status = $row['status'];
+        $nama_kegiatan = htmlspecialchars($row['nama_kegiatan']);
+        $lokasi = htmlspecialchars($row['lokasi']);
+        $tanggal_kegiatan = htmlspecialchars($row['tanggal_kegiatan']);
+        $deskripsi = htmlspecialchars($row['deskripsi_kegiatan']);
+        $dokumentasi = htmlspecialchars($row['dokumentasi']);
+        $status = htmlspecialchars($row['status']);
+        $jenis_kegiatan = htmlspecialchars($row['jenis_kegiatan']);
 
-        echo '<div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="row no-gutters"> 
-                        <div class="col-md-7">
-                            <div class="card-body">
-                                <h5 class="card-title text-center" contentEditable="true" oninput="updateCardContent(this, \'title\')">' . $nama_kegiatan . '</h5>
-                                <p class="card-text"><i class="bi bi-geo-alt-fill"></i> <span contentEditable="true" oninput="updateCardContent(this, \'location\')">' . $lokasi . '</span></p>
-                                <p class="card-text"><i class="bi bi-calendar-date-fill"></i> <span contentEditable="true" oninput="updateCardContent(this, \'date\')">' . $tanggal_kegiatan . '</span></p>
-                                <p class="card-text" contentEditable="true" oninput="updateCardContent(this, \'description\')">' . $deskripsi . '</p>
-                                
-                                <div class="d-flex align-items-center">
-                                    <button class="btn btn-primary" onclick="completeActivity(' . $id_kegiatan . ')">Selesai</button>
-                                    <button class="btn btn-warning ms-2" onclick="editCard(' . $id_kegiatan . ')"><i class="bi bi-pencil"></i></button>
-                                    <button class="btn btn-danger ms-2" onclick="deleteActivity(' . $id_kegiatan . ')"><i class="bi bi-trash"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <img src="/nuraga/organisasi/upload/' . $dokumentasi . '" class="card-img" alt="Card Image" style="width: 100%; height: 100%; object-fit: cover;" contentEditable="true" oninput="updateCardContent(this, \'imageAlt\')">
-                        </div>
+            echo '<div class="row row-two-cols">
+            <div class="col-md-6 mb-4">
+            <div class="blog-card alt">
+                    <div class="meta">
+                    <div class="photo" style="background-image: url(/nuraga/organisasi/upload/' . $dokumentasi . ')"></div>
+                    <ul class="details">
+                        <li class="">' . $lokasi . '</li>
+                        <li class="">' . $tanggal_kegiatan . '</li>
+                        <li class="tags">
+                        
+                        </li>
+                    </ul>
                     </div>
+                        <div class="description">
+                        <h1>' . $nama_kegiatan . '</h1>
+                        <h2>' . $jenis_kegiatan . '</h2>
+                        <p>' . $deskripsi . '</p>
+                        <p class="read-more">
+                        <button class="button-62" onclick="completeActivity(' . $id_kegiatan . ')">Selesai</button>
+                        <button class="button-62" onclick="editCard(' . $id_kegiatan . ')"><i class="bi bi-pencil"></i></button>
+                        <button class="button-62" onclick="deleteActivity(' . $id_kegiatan . ')"><i class="bi bi-trash"></i></button>
+                        </p>
+                        </div>
                 </div>
-            </div>';
+                </div>
+                    
+                </div>';
     }
 
     // Bebaskan hasil query
@@ -118,6 +122,7 @@ if ($result) {
 // Tutup koneksi ke database
 $conn->close();
 ?>
+
 </br>
 </div>
         <style>

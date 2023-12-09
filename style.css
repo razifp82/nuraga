@@ -83,7 +83,7 @@ body {
     z-index: 1;
     left: 0;
     top: 0;
-    background-color: #24252a;
+    background-color: #0088a9;
     overflow-x: hidden;
     transition: all 0.5s ease 0s;
   }
@@ -183,7 +183,7 @@ nav ul li a {
 }
 
 .btn {
-    background-color: #333;
+    background-color: #0088a9;
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;

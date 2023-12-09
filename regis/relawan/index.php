@@ -31,11 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Lanjutkan dengan proses pendaftaran
         // ...
     } else {
-        echo "Username sudah digunakan. Pilih username lain.";
+        echo '<script>alert("Username sudah digunakan. Pilih username lain.");</script>';
     }
 
     if (empty($nama) || empty($email) || empty($password) || empty($jenis_kelamin) || empty($username) || empty($alamat) || empty($tanggal_lahir)) {
-        echo "<script>alert('Harap isi semua bidang.');</script>";
+        echo '<script>alert("Harap isi semua bidang.");</script>';
     } else {
         // Melakukan escape string untuk menghindari SQL Injection
         $nama = $conn->real_escape_string($nama);
@@ -53,9 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO relawan (nama, email, password, jenis_kelamin, username, alamat, tanggal_lahir) VALUES ('$nama', '$email', '$hashed_password', '$jenis_kelamin', '$username', '$alamat', '$tanggal_lahir')";
 
         if ($conn->query($sql) === TRUE) {
-            echo "<script>alert('Pendaftaran berhasil! Selamat datang, $nama!');</script>";
+            echo '<script>alert("Pendaftaran berhasil! Selamat datang, ' . $nama . '!");</script>';
         } else {
-            echo "<script>alert('Error: " . $sql . "\\n" . $conn->error . "');</script>";
+            echo '<script>alert("Error: ' . $sql . '\n' . $conn->error . '");</script>';
         }
 
         // Menutup koneksi ke database
@@ -63,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">

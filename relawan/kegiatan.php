@@ -33,7 +33,7 @@ if ($_SESSION["userType"] !== 'relawan') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NURAGA</title>
     <link rel="icon" href="images/logo/icon.pth.png" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="style_card.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8H+0aNCIn1w4/4RM79XEOGQl47c4sDO/MEbqmbek5B+6EAg1PTXBRQDbh8Rw" crossorigin="anonymous"></script>
@@ -68,7 +68,7 @@ if ($_SESSION["userType"] !== 'relawan') {
 
 </head>
 <body>
-<header>
+<header class="header2">
     <a class="logo" href="organisasi.php"><img src="/nuraga/images/logo/logo.pth.png" height="50px" alt="logo"></a>
     <nav>
         <ul class="nav__links">
@@ -76,19 +76,31 @@ if ($_SESSION["userType"] !== 'relawan') {
             <li><a href="relawan.php">Program</a></li>
             <li><a href="relawan.php">Tentang Kami</a></li>
             <li><a href="kegiatan.php">Cari kegiatan</a></li>
-            <li><a href="logout.php">logout</a></li>
+           
         </ul>
     </nav>
+    <li class="mamak"><?php
+                    include'notif.php'?></li>
+                 <li class="mamak"> <?php
+                    include'profil.php' ?></li>
 </header>
 <div class="container my-3">
     <br>
-    <div class="search-container">
-        <form method="get" action="kegiatan.php">
-            <input type="text" name="search" id="search" placeholder="Search..."> <button type="submit">Search</button>
-           
-        </form>
+    <div class="search-container3">
+        <input type="text" class="search-input3" placeholder="Search for items...">
+        <button class="search-btn3">Cari</button>
+        <div class="dropdown3">
+    <button class="search-btn3">Jenis Kegiatan</button>
+    <div class="dropdown-content3">
+        <a href="?jenis_kegiatan=Donasi">Donasi</a>
+        <a href="?jenis_kegiatan=Kerja%20Sosial">Kerja Sosial</a>
+        <a href="?jenis_kegiatan=Penggalangan%20Dana">Penggalangan Dana</a>
+        <a href="?jenis_kegiatan=Bakti%20Sosial">Bakti Sosial</a>
+        <a href="?jenis_kegiatan=Relawan">Relawan</a>
     </div>
-    <br>
+</div>
+    </div>
+        
     <div class="container my-3">
         <br>
         </br>
@@ -96,15 +108,21 @@ if ($_SESSION["userType"] !== 'relawan') {
             <?php
             // Ambil nilai pencarian dari parameter URL
             $search = isset($_GET['search']) ? $_GET['search'] : '';
+            $jenisKegiatan = isset($_GET['jenis_kegiatan']) ? $_GET['jenis_kegiatan'] : '';
 
             // Query untuk mengambil data kegiatan dari database dengan status 'belum' dan sesuai dengan kata kunci pencarian
-            $query = "SELECT id_kegiatan, nama_kegiatan, organisasi, lokasi, tanggal_kegiatan, deskripsi_kegiatan, dokumentasi, status FROM kegiatan WHERE status = 'belum'";
+            $query = "SELECT id_kegiatan, nama_kegiatan, jenis_kegiatan, organisasi, lokasi, tanggal_kegiatan, deskripsi_kegiatan, dokumentasi, status FROM kegiatan WHERE status = 'belum'";
+
+            if (!empty($jenisKegiatan)) {
+                $query .= " AND jenis_kegiatan = '$jenisKegiatan'";
+            }
 
             // Tambahkan kondisi pencarian jika ada kata kunci pencarian
             if (!empty($search)) {
-                $search = $conn->real_escape_string($search);
-                $query .= " AND (nama_kegiatan LIKE '%$search%' OR organisasi LIKE '%$search%' OR lokasi LIKE '%$search%' OR tanggal_kegiatan LIKE '%$search%' OR deskripsi_kegiatan LIKE '%$search%')";
-            }
+            $search = $conn->real_escape_string($search);
+            $query .= " AND (nama_kegiatan LIKE '%$search%' OR organisasi LIKE '%$search%' OR lokasi LIKE '%$search%' OR tanggal_kegiatan LIKE '%$search%' OR deskripsi_kegiatan LIKE '%$search%')";
+                 }
+
 
             $result = $conn->query($query);
 
@@ -119,6 +137,7 @@ if ($_SESSION["userType"] !== 'relawan') {
                     $deskripsi = $row['deskripsi_kegiatan'];
                     $dokumentasi = $row['dokumentasi'];
                     $status = $row['status'];
+                    $jenis_kegiatan = $row ['jenis_kegiatan'];
             
                     // Cek apakah pengguna sudah gabung ke kegiatan atau belum
                     $query_check = "SELECT * FROM daftar WHERE id_kegiatan = '$id_kegiatan' AND id_relawan = '{$_SESSION['id_relawan']}'";
