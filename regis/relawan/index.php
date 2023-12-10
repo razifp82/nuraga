@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama = $_POST["nama"];
     $email = $_POST["email"];
     $password = $_POST["password"];
-    $jenis_kelamin = $_POST["jenis_kelamin"];
+    
     $username = $_POST["username"];
     $alamat = $_POST["alamat"];
     $tanggal_lahir = date("Y-m-d", strtotime($_POST["tanggal_lahir"]));
@@ -34,9 +34,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo '<script>alert("Username sudah digunakan. Pilih username lain.");</script>';
     }
 
-    if (empty($nama) || empty($email) || empty($password) || empty($jenis_kelamin) || empty($username) || empty($alamat) || empty($tanggal_lahir)) {
+    if (empty($nama) || empty($email) || empty($password) || empty($username) || empty($alamat) || empty($tanggal_lahir)) {
         echo '<script>alert("Harap isi semua bidang.");</script>';
     } else {
+        // Validasi ketersediaan jenis_kelamin
+        if(isset($_POST["jenis_kelamin"])) {
+            $jenis_kelamin = $_POST["jenis_kelamin"];
+        } else {
+            echo '<script>alert("Harap pilih jenis kelamin.");</script>';
+            // Jika jenis kelamin tidak ada, hentikan proses pendaftaran
+            exit();
+        }
+
         // Melakukan escape string untuk menghindari SQL Injection
         $nama = $conn->real_escape_string($nama);
         $email = $conn->real_escape_string($email);
@@ -90,33 +99,93 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Main CSS-->
     <link href="css/main.css" rel="stylesheet" media="all">
+    <style>
+         .checkbox-container {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            margin-right: 10px; /* Add margin to the right for spacing */
+        }
+
+        .checkbox-label button {
+            background: none;
+            border: none;
+            color: #007BFF;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-left: 5px;
+        }
+
+        .checkbox-label button:hover {
+            color: #0056b3;
+        }
+
+        .checkbox-label button:focus {
+            outline: none;
+        }
+
+        #termsCheckbox {
+            margin-right: 5px;
+        }
+
+        .modal-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal {
+            background: #fff;
+            padding: 20px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border-radius: 8px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
     <div class="page-wrapper bg-red p-t-180 p-b-100 font-robo">
         <div class="wrapper wrapper--w960">
             <div class="card card-2">
-            <?php
-            
-            if (isset($_SESSION["user"], $_SESSION["userType"])) {
-               
-                switch ($_SESSION["userType"]) {
-                    case 'admin':
-                        header("Location: /nuraga/admin/admin.php?username=" . $_SESSION["user"]);
-                        break;
-                    case 'relawan':
-                        header("Location: /nuraga/relawan/relawan.php?username=" . $_SESSION["user"]);
-                        break;
-                    case 'organisasi':
-                        header("Location: /nuraga/organisasi/organisasi.php?username=" . $_SESSION["user"]);
-                        break;
-                    default:
-                        
-                        break;
+                <?php
+                if (isset($_SESSION["user"], $_SESSION["userType"])) {
+                    switch ($_SESSION["userType"]) {
+                        case 'admin':
+                            header("Location: /nuraga/admin/admin.php?username=" . $_SESSION["user"]);
+                            break;
+                        case 'relawan':
+                            header("Location: /nuraga/relawan/relawan.php?username=" . $_SESSION["user"]);
+                            break;
+                        case 'organisasi':
+                            header("Location: /nuraga/organisasi/organisasi.php?username=" . $_SESSION["user"]);
+                            break;
+                        default:
+                            break;
+                    }
+                    exit();
                 }
-                exit();
-            }
-            ?>
+                ?>
                 <div class="card-heading"></div>
                 <div class="card-body">
                     <div class="top_link"><a href="\nuraga/index.php"><img src="https://drive.google.com/u/0/uc?id=16U__U5dJdaTfNGobB_OpwAJ73vM50rPV&export=download" alt="">Kembali ke halaman utama</a></div>
@@ -158,10 +227,89 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="input-group">
                             <input class="input--style-2" type="password" placeholder="Password" name="password">
                         </div>
+                        <!-- Checkbox for terms and conditions -->
                         
-                        <div class="p-t-30">
-                            <button class="btn btn--radius btn--green" type="submit">Daftar</button>
-                        </div>
+                        <div class="checkbox-container">
+        <label for="termsCheckbox" class="checkbox-label">
+            <input type="checkbox" id="termsCheckbox" name="termsCheckbox">
+            <button type="button" onclick="openModal()">Syarat dan Ketentuan</button>
+        </label>
+        <div class="modal-container" id="modalContainer">
+            <div class="modal">
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+                <h2>Syarat dan Ketentuan</h2>
+                <br><br>
+<p>
+    <strong>Pendaftaran dan Akun Pengguna</strong><br>
+    <br><em>Persetujuan:</em><p>
+    Dengan mendaftar di situs kami, Anda setuju untuk mematuhi syarat dan ketentuan yang tercantum di sini.</p>
+</p><br>
+<p>
+    <em>Informasi Pribadi:</em><p>
+    Anda bertanggung jawab atas keakuratan informasi pribadi yang Anda berikan selama proses pendaftaran.</p>
+</p><br>
+<p>
+    <em>Keamanan Akun:</em><p>
+    Anda bertanggung jawab untuk menjaga keamanan dan kerahasiaan kata sandi akun Anda. Segala aktivitas 
+    yang terjadi di bawah akun Anda menjadi tanggung jawab Anda.</p>
+</p><br>
+<p>
+    <strong>Kewajiban Pengguna</strong><br>
+    <br><em>Penggunaan yang Dilarang:</em><p>
+    Anda setuju untuk tidak menggunakan situs ini untuk tujuan yang ilegal atau melanggar hak privasi dan 
+    keamanan orang lain.</p>
+</p><br>
+<p>
+    <em>Hak Cipta:</em><p>
+    Materi dan konten di situs ini dilindungi oleh hak cipta. Penggunaan tanpa izin dapat mengakibatkan 
+    tindakan hukum.</p>
+</p><br>
+<p>
+    <strong>Kebijakan Privasi</strong><br>
+    <br><em>Pengumpulan Informasi:</em><p>
+    Kami mengumpulkan informasi tertentu saat Anda menggunakan situs kami. Detail lebih lanjut dapat 
+    ditemukan dalam Kebijakan Privasi kami.</p>
+</p><br>
+<p>
+    <em>Pemberitahuan Perubahan:</em><p>
+    Kami berhak untuk mengubah syarat dan ketentuan ini. Perubahan tersebut akan diberitahukan kepada 
+    pengguna melalui email atau pemberitahuan di situs.</p>
+</p><br>
+<p>
+    <strong>Pemutusan Hubungan</strong>
+    <br><em>Pemutusan oleh Pengguna:</em><p>
+    Anda dapat memutuskan akun Anda kapan saja dengan memberikan pemberitahuan kepada kami.</p>
+</p><br>
+<p>
+    <em>Pemutusan oleh Pihak Kami:</em><p>
+    Kami berhak untuk memutuskan hubungan dengan Anda jika kami curiga bahwa Anda melanggar syarat dan 
+    ketentuan ini.</p>
+</p><br>
+<p>
+    <strong>Lain-lain</strong><br>
+    <br><em>Hak dan Tanggung Jawab:</em><p>
+    Anda setuju bahwa penggunaan situs ini sepenuhnya risiko Anda sendiri. Kami tidak bertanggung jawab 
+    atas kerugian atau kerusakan yang mungkin terjadi akibat penggunaan situs ini.</p>
+</p><br>
+<p>
+    <em>Hukum yang Berlaku:</em><p>
+    Syarat dan ketentuan ini tunduk pada hukum yang berlaku di wilayah yurisdiksi kami.</p>
+</p><br>
+<p>
+    Dengan mendaftar dan menggunakan situs kami, Anda menyatakan bahwa Anda telah membaca, memahami, 
+    dan menyetujui syarat dan ketentuan ini. Jika Anda tidak setuju dengan syarat dan ketentuan ini, harap untuk tidak menggunakan situs ini.
+</p>
+
+</div>
+        </div>
+    </div>
+
+                        
+
+                       
+<div class="p-t-30">
+    <button class="btn btn--radius btn--green" type="button" onclick="validateForm()">Daftar</button>
+</div>
                     </form>
                 </div>
             </div>
@@ -177,6 +325,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Main JS-->
     <script src="js/global.js"></script>
+
+    <script>
+          function openModal() {
+        document.getElementById('modalContainer').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('modalContainer').style.display = 'none';
+    }
+
+    function validateForm() {
+        // Check if the checkbox is selected
+        var checkbox = document.getElementById('termsCheckbox');
+        if (checkbox.checked) {
+            // If selected, submit the form
+            document.querySelector('form').submit();
+        } else {
+            // If not selected, show an alert
+            alert("Anda harus menyetujui Syarat dan Ketentuan untuk mendaftar.");
+        }
+    }
+    </script>
+
 
 </body>
 

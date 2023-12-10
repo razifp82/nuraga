@@ -55,17 +55,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
         $query = "INSERT INTO kegiatan (nama_kegiatan, jenis_kegiatan, deskripsi_kegiatan, tanggal_kegiatan, lokasi, dokumentasi, organisasi ,id_organisasi) 
                   VALUES ('$nama_kegiatan', '$jenis_kegiatan', '$deskripsi_kegiatan', '$tanggal_kegiatan', '$lokasi', '$nama_file', '$nama_organisasi','$id_organisasi')";
 
-        if ($conn->query($query) === TRUE) {
-            // Redirect ke halaman kegiatan setelah berhasil menyimpan
-            echo '<script>alert("Kegiatan berhasil disimpan!");</script>';
-            header("Location: /nuraga/organisasi/organisasi.php?username=" . $_SESSION["user"]);
-            exit;
-        } else {
-            // Hapus file yang sudah diupload jika gagal menyimpan ke database
-            unlink($upload_path);
-            // Tampilkan pesan error jika gagal menyimpan
-            echo "Error: " . $query . "<br>" . $conn->error;
-        }
+if ($conn->query($query) === TRUE) {
+    // Redirect ke halaman kegiatan setelah berhasil menyimpan
+    echo '<script>showSuccessAlert();</script>';
+    header("Location: /nuraga/organisasi/organisasi.php?username=" . $_SESSION["user"]);
+    exit;
+} else {
+    // Hapus file yang sudah diupload jika gagal menyimpan ke database
+    unlink($upload_path);
+    // Tampilkan pesan error jika gagal menyimpan
+    echo '<script>alert("Error: ' . $conn->error . '");</script>';
+}
+
     } else {
         echo "Error uploading file.";
     }
@@ -84,6 +85,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/bg.jpg" type="image/x-icon">
+    <script>
+        function showSuccessAlert() {
+            alert("Kegiatan berhasil disimpan!");
+        }
+    </script>
 </head>
 
 <body>

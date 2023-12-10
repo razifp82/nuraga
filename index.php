@@ -36,7 +36,31 @@ $result = $conn->query($query);
 	<label for="modal" class="close">
 		<i class="fa fa-times" aria-hidden="true"></i>
 	</label>
-	<header>
+    <div class="Group1" style="width: 607px; height: 461px; position: relative">
+    <div class="Rectangle1" style="width: 607px; height: 461px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 10px"></div>
+
+    <a href="regis/organisasi/index.php" class="button success" style="width: 240px; height: 244px; left: 321.50px; top: 188px; position: absolute; background: #FF0000; border-radius: 10px">
+        <img class="ProfilOrganisasi1" style="width: 190px; height: 201px; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);" src="images/profil_organisasi.png" />
+    </a>
+
+    <a href="regis/relawan/index.php" style="width: 240px; height: 244px; left: 40px; top: 188px; position: absolute; background: #FF0000; border-radius: 10px">
+        <img class="ProfilRelawan1" style="width: 178px; height: 171px; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);" src="images/profil_relawan.png" />
+    </a>
+
+    <div class="Rectangle5" style="width: 178px; height: 27px; left: 72px; top: 393px; position: absolute; background: white; border-radius: 10px"></div>
+<div class="Rectangle6" style="width: 178px; height: 27px; left: 353px; top: 393px; position: absolute; background: white; border-radius: 10px"></div>
+<div class="Relawan" style="left: 95px; top: 387px; position: absolute; top: 83%; text-align: center; color: black; font-size: 32px; font-family: 'Inter', sans-serif; font-weight: 700; word-wrap: break-word">Relawan</div>
+<div class="Organisasi" style="width: 165px; height: 28px; left: 359px; top: 384px; position: absolute; text-align: center; color: black; font-size: 26px; font-family: 'Inter', sans-serif; font-weight: 700; word-wrap: break-word">Organisasi</div>
+
+<div class="Frame1" style="width: 522px; height: 129px; padding-top: 3px; padding-bottom: 5px; padding-left: 4px; padding-right: 3px; left: 40px; top: 27px; position: absolute; background: #FF0000; border-radius: 10px; overflow: hidden; justify-content: center; align-items: center; display: inline-flex">
+    <div class="BergabungDenganNuragaSebagaiOrganisasiAtauSebagaiRelawan" style="width: 515px; text-align: center; color: white; font-size: 28px; font-family: 'Inter', sans-serif; font-weight: 700; word-wrap: break-word; line-height: 1.2">Bergabung dengan Nuraga sebagai organisasi atau sebagai relawan</div>
+</div>
+
+
+    </div>
+</div>
+
+	<!--<header>
 		<h2 style="color: aliceblue;">Pendaftaran</h2>
 	</header>
 	<article class="content">
@@ -46,7 +70,7 @@ $result = $conn->query($query);
 	<footer>
 		<a href="regis/relawan/index.php" target="_parent" class="button success"> <img src="images/relawan.png" alt="" height="100px" width="20px">RELAWAN</a>
         <a href="regis/organisasi/index.php" target="_parent" class="button success"> <img src="images/organisasi.png" alt="" height="100px">ORGANISASI</a>
-    </footer>
+    </footer> -->
 	
 </div>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>

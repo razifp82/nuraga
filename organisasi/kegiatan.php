@@ -28,7 +28,7 @@ if ($_SESSION["userType"] !== 'organisasi') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NURAGA</title>
     <link rel="icon" href="/nurarga/images/logo/icon.pth.png" type="image/x-icon">
-   
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8H+0aNCIn1w4/4RM79XEOGQl47c4sDO/MEbqmbek5B+6EAg1PTXBRQDbh8Rw" crossorigin="anonymous"></script>
@@ -71,52 +71,59 @@ $query = "SELECT id_kegiatan, nama_kegiatan, lokasi, tanggal_kegiatan, deskripsi
 $result = $conn->query($query);
 
 // Periksa apakah query berhasil dijalankan
-if ($result) {
-    // Tampilkan konten HTML
-    while ($row = $result->fetch_assoc()) {
-        $id_kegiatan = $row['id_kegiatan'];
-        $nama_kegiatan = htmlspecialchars($row['nama_kegiatan']);
-        $lokasi = htmlspecialchars($row['lokasi']);
-        $tanggal_kegiatan = htmlspecialchars($row['tanggal_kegiatan']);
-        $deskripsi = htmlspecialchars($row['deskripsi_kegiatan']);
-        $dokumentasi = htmlspecialchars($row['dokumentasi']);
-        $status = htmlspecialchars($row['status']);
-        $jenis_kegiatan = htmlspecialchars($row['jenis_kegiatan']);
+while ($row = $result->fetch_assoc()) {
+    $id_kegiatan = $row['id_kegiatan'];
+    $nama_kegiatan = htmlspecialchars($row['nama_kegiatan']);
+    $lokasi = htmlspecialchars($row['lokasi']);
+    $tanggal_kegiatan = htmlspecialchars($row['tanggal_kegiatan']);
+    $deskripsi = htmlspecialchars($row['deskripsi_kegiatan']);
+    $dokumentasi = htmlspecialchars($row['dokumentasi']);
+    $status = htmlspecialchars($row['status']);
+    $jenis_kegiatan = htmlspecialchars($row['jenis_kegiatan']);
 
-            echo '<div class="row row-two-cols">
-            <div class="col-md-6 mb-4">
-            <div class="blog-card alt">
-                    <div class="meta">
-                    <div class="photo" style="background-image: url(/nuraga/organisasi/upload/' . $dokumentasi . ')"></div>
-                    <ul class="details">
-                        <li class="">' . $lokasi . '</li>
-                        <li class="">' . $tanggal_kegiatan . '</li>
-                        <li class="tags">
-                        
-                        </li>
-                    </ul>
-                    </div>
-                        <div class="description">
-                        <h1>' . $nama_kegiatan . '</h1>
-                        <h2>' . $jenis_kegiatan . '</h2>
-                        <p>' . $deskripsi . '</p>
-                        <p class="read-more">
-                        <button class="button-62" onclick="completeActivity(' . $id_kegiatan . ')">Selesai</button>
-                        <button class="button-62" onclick="editCard(' . $id_kegiatan . ')"><i class="bi bi-pencil"></i></button>
-                        <button class="button-62" onclick="deleteActivity(' . $id_kegiatan . ')"><i class="bi bi-trash"></i></button>
-                        </p>
-                        </div>
-                </div>
-                </div>
-                    
-                </div>';
+    // Query untuk menghitung jumlah relawan yang mendaftar untuk kegiatan ini
+    $queryDaftar = "SELECT COUNT(*) AS jumlah_relawan FROM daftar WHERE id_kegiatan = $id_kegiatan";
+    $resultDaftar = $conn->query($queryDaftar);
+
+    // Periksa apakah query berhasil dijalankan
+    if ($resultDaftar) {
+        // Ambil hasil query
+        $rowDaftar = $resultDaftar->fetch_assoc();
+        $jumlah_relawan = $rowDaftar['jumlah_relawan'];
+
+        // Tampilkan konten HTML dengan jumlah relawan yang mendaftar
+        echo '
+        <div class="col-md-6 mb-4">
+        <div class="blog-card alt">
+            <div class="meta">
+                <div class="photo" style="background-image: url(/nuraga/organisasi/upload/' . $dokumentasi . ')"></div>
+                <ul class="details">
+                    <li class="">' . $lokasi . '</li>
+                    <li class="">' . $tanggal_kegiatan . '</li>
+                    <li>Jumlah Relawan: ' . $jumlah_relawan . '</li>
+                    <li class="tags"></li>
+                </ul>
+            </div>
+            <div class="description">
+                <h1>' . $nama_kegiatan . '</h1>
+                <h2>' . $jenis_kegiatan . '</h2>
+                <p>' . $deskripsi . '</p>
+                <p class="read-more">
+                    <button class="button-62" onclick="completeActivity(' . $id_kegiatan . ')">Selesai</button>
+                    <button class="button-62" onclick="editCard(' . $id_kegiatan . ')"><i class="bi bi-pencil"></i></button>
+                    <button class="button-62" onclick="deleteActivity(' . $id_kegiatan . ')"><i class="bi bi-trash"></i></button>
+                </p>
+            </div>
+        
+        </div>
+        </div>';
+
+        // Bebaskan hasil query daftar
+        $resultDaftar->free_result();
+    } else {
+        // Tampilkan pesan jika query daftar gagal
+        echo "Error: " . $queryDaftar . "<br>" . $conn->error;
     }
-
-    // Bebaskan hasil query
-    $result->free_result();
-} else {
-    // Tampilkan pesan jika query gagal
-    echo "Error: " . $query . "<br>" . $conn->error;
 }
 
 // Tutup koneksi ke database
@@ -134,17 +141,7 @@ $conn->close();
     }
 </style>
     <!-- Add your content here, such as cards or a list of activities -->
-    <div class="row">
-        <div class="col-md-5">
-            <!-- Your content goes here -->
-        </div>  
-        <div class="col-md-5">
-            <!-- Your content goes here -->
-        </div>
-        <div class="col-md-5">
-            <!-- Your content goes here -->
-        </div>
-    </div>
+    
 </div>
 <!-- Add this script to your page -->
 <script>

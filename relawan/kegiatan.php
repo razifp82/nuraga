@@ -69,7 +69,7 @@ if ($_SESSION["userType"] !== 'relawan') {
 </head>
 <body>
 <header class="header2">
-    <a class="logo" href="organisasi.php"><img src="/nuraga/images/logo/logo.pth.png" height="50px" alt="logo"></a>
+    <a class="logo" href="relawan.php"><img src="/nuraga/images/logo/logo.pth.png" height="50px" alt="logo"></a>
     <nav>
         <ul class="nav__links">
             <li><a href="relawan.php">Beranda</a></li>
@@ -86,19 +86,22 @@ if ($_SESSION["userType"] !== 'relawan') {
 </header>
 <div class="container my-3">
     <br>
+    <form method="GET">
     <div class="search-container3">
-        <input type="text" class="search-input3" placeholder="Search for items...">
-        <button class="search-btn3">Cari</button>
+        <input type="text" name="search" class="search-input3" placeholder="Search for items...">
+        <button type="submit" class="search-btn3">Cari</button>
         <div class="dropdown3">
-    <button class="search-btn3">Jenis Kegiatan</button>
-    <div class="dropdown-content3">
-        <a href="?jenis_kegiatan=Donasi">Donasi</a>
-        <a href="?jenis_kegiatan=Kerja%20Sosial">Kerja Sosial</a>
-        <a href="?jenis_kegiatan=Penggalangan%20Dana">Penggalangan Dana</a>
-        <a href="?jenis_kegiatan=Bakti%20Sosial">Bakti Sosial</a>
-        <a href="?jenis_kegiatan=Relawan">Relawan</a>
+            <button class="search-btn3">Jenis Kegiatan</button>
+            <div class="dropdown-content3">
+                <a href="?jenis_kegiatan=Donasi">Donasi</a>
+                <a href="?jenis_kegiatan=Kerja%20Sosial">Kerja Sosial</a>
+                <a href="?jenis_kegiatan=Penggalangan%20Dana">Penggalangan Dana</a>
+                <a href="?jenis_kegiatan=Bakti%20Sosial">Bakti Sosial</a>
+                <a href="?jenis_kegiatan=Relawan">Relawan</a>
+            </div>
+        </div>
     </div>
-</div>
+</form>
     </div>
         
     <div class="container my-3">
@@ -110,18 +113,19 @@ if ($_SESSION["userType"] !== 'relawan') {
             $search = isset($_GET['search']) ? $_GET['search'] : '';
             $jenisKegiatan = isset($_GET['jenis_kegiatan']) ? $_GET['jenis_kegiatan'] : '';
 
-            // Query untuk mengambil data kegiatan dari database dengan status 'belum' dan sesuai dengan kata kunci pencarian
-            $query = "SELECT id_kegiatan, nama_kegiatan, jenis_kegiatan, organisasi, lokasi, tanggal_kegiatan, deskripsi_kegiatan, dokumentasi, status FROM kegiatan WHERE status = 'belum'";
+           // Query untuk mengambil data kegiatan dari database dengan status 'belum' dan sesuai dengan kata kunci pencarian
+$query = "SELECT id_kegiatan, nama_kegiatan, jenis_kegiatan, organisasi, lokasi, tanggal_kegiatan, deskripsi_kegiatan, dokumentasi, status FROM kegiatan WHERE status = 'belum'";
 
-            if (!empty($jenisKegiatan)) {
-                $query .= " AND jenis_kegiatan = '$jenisKegiatan'";
-            }
+if (!empty($jenisKegiatan)) {
+    $query .= " AND jenis_kegiatan = '$jenisKegiatan'";
+}
 
-            // Tambahkan kondisi pencarian jika ada kata kunci pencarian
-            if (!empty($search)) {
-            $search = $conn->real_escape_string($search);
-            $query .= " AND (nama_kegiatan LIKE '%$search%' OR organisasi LIKE '%$search%' OR lokasi LIKE '%$search%' OR tanggal_kegiatan LIKE '%$search%' OR deskripsi_kegiatan LIKE '%$search%')";
-                 }
+// Tambahkan kondisi pencarian jika ada kata kunci pencarian
+if (!empty($search)) {
+    $search = $conn->real_escape_string($search);
+    $query .= " AND (nama_kegiatan LIKE '%$search%' OR organisasi LIKE '%$search%' OR lokasi LIKE '%$search%' OR tanggal_kegiatan LIKE '%$search%' OR deskripsi_kegiatan LIKE '%$search%')";
+}
+
 
 
             $result = $conn->query($query);

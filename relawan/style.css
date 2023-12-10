@@ -217,10 +217,11 @@ nav ul li a {
 }
 
 footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
+  margin-top: auto; /* Dorong footer ke bagian bawah */
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
 }
 
 img{
@@ -374,6 +375,9 @@ article:has(:hover, :focus) {
   box-sizing: border-box;
 }
 
+.container {
+  flex: 1; /* Buat kontainer fleksibel untuk mengisi ruang yang tersedia */
+}
 
 .articles {
   display: grid;
@@ -427,6 +431,7 @@ article:has(:hover, :focus) {
   overflow: auto;
   padding: 20px;
   width: 190px;
+  margin-top: 10px; 
  }
  .dropdown-option > li {
 list-style: none;
@@ -452,6 +457,7 @@ list-style-type: none;
  .mamak{
   list-style: none;
   list-style-type: none;
+  margin-top: 10px; 
  }
  
  .putih{
