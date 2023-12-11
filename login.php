@@ -25,8 +25,18 @@ function login($username, $password) {
             // Ambil data dari hasil query
             $row = $result->fetch_assoc();
 
-            // cek password verify
+             // Verifikasi status akun untuk organisasi
+             if ($table === 'organisasi' && $row['status'] === 'none') {
+                // Tampilkan pesan alert jika verifikasi akun belum disetujui oleh admin
+                echo '<script>alert("Verifikasi akun anda belum di setujui oleh admin. Silahkan tunggu beberapa saat."); window.location.href = "index.php";</script>';
+                exit();
+            } elseif ($table === 'organisasi' && $row['status'] === 'no') {
+                // Tampilkan pesan alert jika verifikasi akun ditolak oleh admin
+                echo '<script>alert("Verifikasi akun anda ditolak oleh admin. Silahkan hubungi admin untuk informasi lebih lanjut."); window.location.href = "index.php";</script>';
+                exit();
+            }
             
+
             // Login berhasil
             $_SESSION['user'] = $username;
             $_SESSION['userType'] = $table;
