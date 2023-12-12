@@ -1,11 +1,14 @@
 <?php
-// ... (kode sebelumnya)
+session_start();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_kegiatan'])) {
+include "../koneksi.php";
+
+if ( isset($_POST['id_kegiatan'])) {
     $id_kegiatan = $_POST['id_kegiatan'];
     $id_relawan = $_SESSION['id_relawan'];
+    $date = date('Y-m-d H:i:s');
 
-    $query = "UPDATE daftar SET lastUpdate = CURRENT_TIMESTAMP WHERE id_kegiatan = $id_kegiatan AND id_relawan = $id_relawan";
+    $query = "UPDATE daftar SET lastUpdate = '$date' WHERE id_kegiatan = $id_kegiatan AND id_relawan = $id_relawan";
     $result = mysqli_query($conn, $query);
 
     if ($result) {

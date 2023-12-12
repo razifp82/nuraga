@@ -63,7 +63,7 @@ function handleCancel(id_kegiatan) {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: 'id_kegiatan=' + id_kegiatan,
+        body: 'id_kegiatan' + id_kegiatan,
     })
     .then(response => response.json())
     .then(data => {

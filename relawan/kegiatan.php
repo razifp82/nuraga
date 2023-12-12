@@ -33,9 +33,12 @@ if ($_SESSION["userType"] !== 'relawan') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NURAGA</title>
     <link rel="icon" href="images/logo/icon.pth.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="style_card.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8H+0aNCIn1w4/4RM79XEOGQl47c4sDO/MEbqmbek5B+6EAg1PTXBRQDbh8Rw" crossorigin="anonymous"></script>
     <script>
     function completeActivity(id_kegiatan, action) {
@@ -85,9 +88,11 @@ if ($_SESSION["userType"] !== 'relawan') {
                     include'profil.php' ?></li>
 </header>
 <div class="container my-3">
-    <br>
+    <br />
+    <div class="row">
+
     <form method="GET">
-    <div class="search-container3">
+    <!-- <div class="search-container3">
         <input type="text" name="search" class="search-input3" placeholder="Search for items...">
         <button type="submit" class="search-btn3">Cari</button>
         <div class="dropdown3">
@@ -100,8 +105,27 @@ if ($_SESSION["userType"] !== 'relawan') {
                 <a href="?jenis_kegiatan=Relawan">Relawan</a>
             </div>
         </div>
+    </div> -->
+
+
+    <div class="input-group">
+  <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+  <div class="input-group-append">
+    <button type="button" class="btn btn-outline-secondary">Action</button>
+    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Action</a>
+      <a class="dropdown-item" href="#">Another action</a>
+      <a class="dropdown-item" href="#">Something else here</a>
+      <div role="separator" class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">Separated link</a>
     </div>
+  </div>
+</div>
 </form>
+    </div>
     </div>
         
     <div class="container my-3">
