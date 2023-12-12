@@ -12,7 +12,7 @@ function login($username, $password) {
     $password = $conn->real_escape_string($password);
 
     // Enkripsi password dengan MD5
-    // $password = md5($password);
+     $password = md5($password);
 
     // Tentukan tabel login berdasarkan username
     $tables = ['admin', 'relawan', 'organisasi'];
@@ -32,7 +32,7 @@ function login($username, $password) {
                 exit();
             } elseif ($table === 'organisasi' && $row['status'] === 'no') {
                 // Tampilkan pesan alert jika verifikasi akun ditolak oleh admin
-                echo '<script>alert("Verifikasi akun anda ditolak oleh admin. Silahkan hubungi admin untuk informasi lebih lanjut."); window.location.href = "index.php";</script>';
+                echo '<script>alert("Verifikasi akun anda ditolak oleh admin. Silahkan hubungi admin untuk informasi lebih lanjut melalui email yang tesedia di wesbite."); window.location.href = "index.php";</script>';
                 exit();
             }
             
@@ -62,7 +62,7 @@ function login($username, $password) {
                     header("Location: relawan/relawan.php?username=".$username);
                     break;
                 case 'organisasi':
-                    $_SESSION['nama_organisasi'] =  $nama_organisasi;
+                  
                     $_SESSION['id_organisasi'] = $row['id_organisasi'];
                     $_SESSION['nama_organisasi'] = $row['nama_organisasi'];
                     $_SESSION['sosial_media '] = $row['sosial_media'];
@@ -79,7 +79,7 @@ function login($username, $password) {
     }
 
     // Jika tidak ada kesesuaian, login gagal
-    echo "Login gagal. Periksa username dan password Anda.";
+    echo "<script>alert('Login gagal. Periksa username dan password Anda.'); window.location.href = 'login.php';</script>'";
 
     $conn->close();
 }

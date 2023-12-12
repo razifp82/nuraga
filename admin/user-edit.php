@@ -154,7 +154,7 @@ if (!empty($nama)) {
                     <nav class="d-none d-md-block" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="#">Validasi</a>
+                                <a href="#">Ubah Nilai Status</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">All Users</li>
                         </ol>
@@ -196,7 +196,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $status = $row['status'];
 
     // Tampilkan data dalam bentuk baris tabel HTML
-    if ($status == 'none') {
+    if ($status != 'none') {
     echo '<tr>
             <td class="py-3">'.$id_organisasi.'</td>
             <td class="align-middle py-3">

@@ -63,14 +63,14 @@ function handleCancel(id_kegiatan) {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: 'id_kegiatan' + id_kegiatan,
+        body: 'id_kegiatan=' + id_kegiatan, // Perubahan di sini
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
             // Update waktu lastUpdated pada notifikasi yang telah diklik
             const notification = document.querySelector('.notification-message');
-            notification.innerHTML = 'Terakhir diubah: ' + data.lastUpdated;
+            notification.innerHTML = 'Terakhir diubah: ' + data.lastUpdate; // Sesuaikan dengan nama kolom yang sebenarnya
         } else {
             alert('Gagal mengubah lastUpdate kegiatan! ' + data.error);
         }
@@ -81,5 +81,6 @@ function handleCancel(id_kegiatan) {
     const notification = document.querySelector('.notification-message');
     notification.remove();
 }
+
 
 </script>

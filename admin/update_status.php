@@ -1,18 +1,17 @@
 <?php
 session_start();
+include ".././koneksi.php";
 
-include "../koneksi.php";
+if (isset($_POST['id_organisasi']) && isset($_POST['status'])) {
+    $idOrganisasi = $_POST['id_organisasi'];
+    $status = $_POST['status'];
 
-if (isset($_POST['id_kegiatan'])) {
-    $id_kegiatan = $_POST['id_kegiatan'];
-    $id_relawan = $_SESSION['id_relawan'];
-    $date = date('Y-m-d H:i:s');
-
-    $query = "UPDATE daftar SET lastUpdated = '$date' WHERE id_kegiatan = $id_kegiatan AND id_relawan = $id_relawan";
+    // Lakukan query untuk memperbarui status
+    $query = "UPDATE organisasi SET status = '$status' WHERE id_organisasi = $idOrganisasi";
     $result = mysqli_query($conn, $query);
 
     if ($result) {
-        $response = array('success' => true, 'lastUpdated' => date('Y-m-d H:i:s'));
+        $response = array('success' => true);
         echo json_encode($response);
     } else {
         $response = array('success' => false, 'error' => mysqli_error($conn));

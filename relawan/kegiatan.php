@@ -32,12 +32,11 @@ if ($_SESSION["userType"] !== 'relawan') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NURAGA</title>
-    <link rel="icon" href="images/logo/icon.pth.png" type="image/x-icon">
+    <link rel="icon" href="/nuraga/images/logo/icon.pth.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" href="style_card.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
+
    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8H+0aNCIn1w4/4RM79XEOGQl47c4sDO/MEbqmbek5B+6EAg1PTXBRQDbh8Rw" crossorigin="anonymous"></script>
     <script>
@@ -92,7 +91,7 @@ if ($_SESSION["userType"] !== 'relawan') {
     <div class="row">
 
     <form method="GET">
-    <!-- <div class="search-container3">
+     <div class="search-container3">
         <input type="text" name="search" class="search-input3" placeholder="Search for items...">
         <button type="submit" class="search-btn3">Cari</button>
         <div class="dropdown3">
@@ -105,10 +104,10 @@ if ($_SESSION["userType"] !== 'relawan') {
                 <a href="?jenis_kegiatan=Relawan">Relawan</a>
             </div>
         </div>
-    </div> -->
+    </div> 
 
 
-    <div class="input-group">
+   <!-- <div class="input-group">
   <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
   <div class="input-group-append">
     <button type="button" class="btn btn-outline-secondary">Action</button>
@@ -123,7 +122,7 @@ if ($_SESSION["userType"] !== 'relawan') {
       <a class="dropdown-item" href="#">Separated link</a>
     </div>
   </div>
-</div>
+</div> -->
 </form>
     </div>
     </div>
@@ -175,29 +174,32 @@ if (!empty($search)) {
                     $buttonAction = $result_check && $result_check->num_rows > 0 ? "remove" : "add";
             
                     echo '<div class="col-md-6 mb-4">
-                            <div class="card">
-                                <div class="row no-gutters"> 
-                                    <div class="col-md-7">
-                                        <div class="card-body">
-                                            <h5 class="card-title text-center" contentEditable="true" oninput="updateCardContent(this, \'title\')">' . $nama_kegiatan . '</h5>
-                                            <p class="card-text"><i class="bi bi-people-fill"></i> <span contentEditable="true" oninput="updateCardContent(this, \'organisasi\')">' . $nama_organisasi . '</span></p>
-                                            <p class="card-text"><i class="bi bi-geo-alt-fill"></i> <span contentEditable="true" oninput="updateCardContent(this, \'location\')">' . $lokasi . '</span></p>
-                                            <p class="card-text"><i class="bi bi-calendar-date-fill"></i> <span contentEditable="true" oninput="updateCardContent(this, \'date\')">' . $tanggal_kegiatan . '</span></p>
-                                            <p class="card-text" contentEditable="true" oninput="updateCardContent(this, \'description\')">' . $deskripsi . '</p>
-                                            <div class="d-flex align-items-center">
-                                                <button class="btn btn-primary" onclick="completeActivity(' . $id_kegiatan . ', \'' . $buttonAction . '\')">' . $buttonText . '</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <img src="/nuraga/organisasi/upload/' . $dokumentasi . '" class="card-img" alt="Card Image" style="width: 100%; height: 100%; object-fit: cover;" contentEditable="true" oninput="updateCardContent(this, \'imageAlt\')">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>';
+                    <div class="blog-card alt">
+                        <div class="meta">
+                            <div class="photo" style="background-image: url(/nuraga/organisasi/upload/' . $dokumentasi . ')"></div>
+                            <ul class="details">
+                                <li class="">' . $lokasi . '</li>
+                                <li class="">' . $tanggal_kegiatan . '</li>
+                              
+                                <li class="tags"></li>
+                            </ul>
+                        </div>
+                        <div class="description">
+                            <h1>' . $nama_kegiatan . '</h1>
+                            <h2>' . $jenis_kegiatan . '</h2>
+                            <p>' . $deskripsi . '</p>
+                            <p class="read-more">
+                            <button class="button-62" onclick="completeActivity(' . $id_kegiatan . ', \'' . $buttonAction . '\')">' . $buttonText . '</button>
+                               
+                                
+                            </p>
+                        </div>
+                    
+                    </div>
+                    </div>';
                 }
                 
-
+                
                 // Bebaskan hasil query
                 $result->free_result();
             } else {
