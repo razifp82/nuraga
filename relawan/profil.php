@@ -1,7 +1,7 @@
-<div class="dropdown">
+<div class="dropdown5">
                 <div class="user-pic">
-                    <img src="/nuraga/images/profil_relawan.png" alt="Profile Picture" class="user-pic" height="50px">
-                    <div class="dropdown-option">
+                    <img src="/nuraga/images/profil_relawan.png" alt="Profile Picture" class="user-pic5" height="50px">
+                    <div class="dropdown-option5">
                         <p class="putih"><?php echo ucfirst( $_SESSION['nama']); ?></p>
                         
                         <p class="putih"><?php echo ucfirst( $_SESSION['tanggal_lahir']); ?></p>
@@ -13,3 +13,4 @@
                         <hr>
                     </div>
             </div>
+</div>

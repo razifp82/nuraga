@@ -12,7 +12,7 @@ $result = $conn->query($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NURAGA</title>
-    <link rel="icon" href="images/logo/icon.pth.png" type="image/x-icon">
+    <link rel="icon" href="images/logo/icon.mrh.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -59,19 +59,6 @@ $result = $conn->query($query);
 
     </div>
 </div>
-
-	<!--<header>
-		<h2 style="color: aliceblue;">Pendaftaran</h2>
-	</header>
-	<article class="content">
-        <center>
-		<p>Bergabung dengan Nuraga sebagai organisasi atau sebagai relawan</p></center>
-	</article>
-	<footer>
-		<a href="regis/relawan/index.php" target="_parent" class="button success"> <img src="images/relawan.png" alt="" height="100px" width="20px">RELAWAN</a>
-        <a href="regis/organisasi/index.php" target="_parent" class="button success"> <img src="images/organisasi.png" alt="" height="100px">ORGANISASI</a>
-    </footer> -->
-	
 </div>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
             

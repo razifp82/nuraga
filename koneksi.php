@@ -1,4 +1,5 @@
 <?php
+
 function connectDB() {
     $host = "localhost";
     $username = "root";

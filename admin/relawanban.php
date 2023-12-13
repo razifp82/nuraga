@@ -32,7 +32,7 @@ if (isset($_GET["usertype"]) && $_GET["usertype"] !== $_SESSION["userType"]) {
 <html lang="en">
 <head>
     <!-- Title -->
-    <title>NURAGA</title>
+    <title>Nuraga</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -172,7 +172,6 @@ if (!empty($nama)) {
             </li>
             </ul>
         </aside>
-        
         <!-- End Sidebar Nav -->
     <div class="content">
         <div class="py-4 px-3 px-md-4">
@@ -183,7 +182,7 @@ if (!empty($nama)) {
                     <nav class="d-none d-md-block" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="#">Validasi</a>
+                                <a href="#">Ubah Nilai Status</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">All Users</li>
                         </ol>
@@ -201,9 +200,9 @@ if (!empty($nama)) {
                             <thead>
                             <tr>
                                 <th class="font-weight-semi-bold border-top-0 py-2">Id</th>
-                                <th class="font-weight-semi-bold border-top-0 py-2">Name</th>
-                                <th class="font-weight-semi-bold border-top-0 py-2">Deskripsi</th>
-                                <th class="font-weight-semi-bold border-top-0 py-2">Sosial Media</th>
+                                <th class="font-weight-semi-bold border-top-0 py-2">Nama</th>
+                                <th class="font-weight-semi-bold border-top-0 py-2">Username</th>
+                                <th class="font-weight-semi-bold border-top-0 py-2">Alamat</th>
                                 <th class="font-weight-semi-bold border-top-0 py-2">Email</th>
                                 <th class="font-weight-semi-bold border-top-0 py-2">Actions</th>
                             </tr>
@@ -211,74 +210,76 @@ if (!empty($nama)) {
                             <tbody>
                             <?php
 
-// Misalkan query untuk mengambil data dari tabel organisasi
-$query = "SELECT id_organisasi,nama_organisasi, deskripsi_organisasi, status, sosial_media, email_organisasi FROM organisasi";
-$result = mysqli_query($conn, $query);
+// Ambil nilai variable dari tabel relawan
+$query = "SELECT id_relawan, nama, username, alamat, email, status FROM relawan WHERE status = 'none'";
+$result = $conn->query($query);
 
-// Periksa apakah query berhasil dieksekusi
-while ($row = mysqli_fetch_assoc($result)) {
-    $id_organisasi = $row['id_organisasi'];
-    $nama_organisasi = $row['nama_organisasi'];
-    $deskripsi_organisasi = $row['deskripsi_organisasi'];
-    $sosial_media = $row['sosial_media'];
-    $email_organisasi = $row['email_organisasi'];
-    $status = $row['status'];
+// Periksa apakah query berhasil dijalankan
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $id_relawan = $row['id_relawan'];
+        $nama = $row['nama'];
+        $username = $row['username'];
+        $alamat = $row['alamat'];
+        $email = $row['email'];
+        $status = $row['status'];
 
-    // Tampilkan data dalam bentuk baris tabel HTML
-    if ($status == 'none') {
-    echo '<tr>
-            <td class="py-3">'.$id_organisasi.'</td>
+        echo '<tr>
+            <td class="py-3">'.$id_relawan.'</td>
             <td class="align-middle py-3">
                 <div class="d-flex align-items-center">
                     <div class="position-relative mr-2">
                         <span class="indicator indicator-lg indicator-bordered-reverse indicator-top-left indicator-success rounded-circle"></span>
-                        <span class="avatar-placeholder mr-md-2">' . substr($nama_organisasi, 0, 1) . '</span>
+                        <span class="avatar-placeholder mr-md-2">' . substr($nama, 0, 1) . '</span>
                     </div>
-                    ' . $nama_organisasi . '
+                    ' . $nama . '
                 </div>
             </td>
-            <td class="py-3">' . $deskripsi_organisasi . '</td>
-            <td class="py-3">' . $sosial_media . '</td>
-            <td class="py-3">' . $email_organisasi . '</td>
+            <td class="py-3">' . $username . '</td>
+            <td class="py-3">' . $alamat . '</td>
+            <td class="py-3">' . $email . '</td>
             <td class="py-3">
-            <div class="position-relative">
-            <button type="button" name="yes" class="btn btn-link" onclick="updateStatus(' . $id_organisasi . ', &quot;yes&quot;)">
-                <i class="fas fa-check">✔️</i>
-            </button>
-            <button type="button" name="no" class="btn btn-link" onclick="updateStatus(' . $id_organisasi . ', &quot;no&quot;)">
-                <i class="fas fa-times">✖</i>
-            </button>
-        </div>
+                <div class="position-relative">
+                    <button type="button" name="no" class="btn btn-link" onclick="updateStatus(' . $id_relawan . ', &quot;no&quot;)">
+                        <i class="fas fa-times">✖</i>
+                    </button>
+                </div>
             </td>
         </tr>';
-}
-}
-?>
-<script>
-function updateStatus(idOrganisasi, status) {
-    console.log('ID Organisasi:', idOrganisasi);
-    console.log('Status:', status);
+    }
 
-    // Lakukan AJAX request untuk mengubah status di tabel organisasi
-    fetch('update_status.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: 'id_organisasi=' + idOrganisasi + '&status=' + status,
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Status berhasil diperbarui, lakukan aksi yang diperlukan (misalnya, tampilkan notifikasi)
-            alert('Status berhasil diperbarui!');
-        } else {
-            // Gagal memperbarui status, tampilkan pesan error (misalnya, tampilkan notifikasi)
-            alert('Gagal memperbarui status: ' + data.error);
-        }
-    })
-    .catch(error => console.error('Error:', error));
+    // Bebaskan hasil query
+    $result->free_result();
+} else {
+    // Tampilkan pesan jika query gagal
+    echo "Error: " . $query . "<br>" . $conn->error;
 }
+
+// Tutup koneksi ke database
+$conn->close();
+?>
+
+<script>
+    function updateStatus(id_relawan, action) {
+        // Lakukan AJAX request untuk mengubah nilai kolom status menjadi "ban"
+        fetch('update_status2.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id_relawan=' + id_relawan + '&action=' + action,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Berhasil memban pengguna!');
+                location.reload();
+            } else {
+                alert('Gagal memban pengguna!');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
 </script>
 
 

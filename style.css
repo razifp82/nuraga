@@ -376,7 +376,7 @@ img{
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 40%;
+  width: auto;
   height: auto;
   margin-top: -10%;
   margin-left: -20%;

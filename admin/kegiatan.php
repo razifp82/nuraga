@@ -32,7 +32,7 @@ if (isset($_GET["usertype"]) && $_GET["usertype"] !== $_SESSION["userType"]) {
 <html lang="en">
 <head>
     <!-- Title -->
-    <title>NURAGA</title>
+    <title>Nuraga</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -172,7 +172,6 @@ if (!empty($nama)) {
             </li>
             </ul>
         </aside>
-        
         <!-- End Sidebar Nav -->
     <div class="content">
         <div class="py-4 px-3 px-md-4">
@@ -183,7 +182,7 @@ if (!empty($nama)) {
                     <nav class="d-none d-md-block" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="#">Validasi</a>
+                                <a href="#">Ubah Nilai Status</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">All Users</li>
                         </ol>
@@ -201,84 +200,88 @@ if (!empty($nama)) {
                             <thead>
                             <tr>
                                 <th class="font-weight-semi-bold border-top-0 py-2">Id</th>
-                                <th class="font-weight-semi-bold border-top-0 py-2">Name</th>
+                                <th class="font-weight-semi-bold border-top-0 py-2">Nama Kegiatan</th>
                                 <th class="font-weight-semi-bold border-top-0 py-2">Deskripsi</th>
-                                <th class="font-weight-semi-bold border-top-0 py-2">Sosial Media</th>
-                                <th class="font-weight-semi-bold border-top-0 py-2">Email</th>
+                                <th class="font-weight-semi-bold border-top-0 py-2">Tanggal</th>
+                                <th class="font-weight-semi-bold border-top-0 py-2">Lokasi</th>
                                 <th class="font-weight-semi-bold border-top-0 py-2">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
 
-// Misalkan query untuk mengambil data dari tabel organisasi
-$query = "SELECT id_organisasi,nama_organisasi, deskripsi_organisasi, status, sosial_media, email_organisasi FROM organisasi";
-$result = mysqli_query($conn, $query);
+// Ambil nilai variabel dari tabel kegiatan
+$query = "SELECT id_kegiatan, nama_kegiatan, deskripsi_kegiatan, tanggal_kegiatan, lokasi FROM kegiatan";
+$result = $conn->query($query);
 
-// Periksa apakah query berhasil dieksekusi
-while ($row = mysqli_fetch_assoc($result)) {
-    $id_organisasi = $row['id_organisasi'];
-    $nama_organisasi = $row['nama_organisasi'];
-    $deskripsi_organisasi = $row['deskripsi_organisasi'];
-    $sosial_media = $row['sosial_media'];
-    $email_organisasi = $row['email_organisasi'];
-    $status = $row['status'];
+// Periksa apakah query berhasil dijalankan
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $id_kegiatan = $row['id_kegiatan'];
+        $nama_kegiatan = $row['nama_kegiatan'];
+        $deskripsi_kegiatan = $row['deskripsi_kegiatan'];
+        $tanggal_kegiatan = $row['tanggal_kegiatan'];
+        $lokasi = $row['lokasi'];
 
-    // Tampilkan data dalam bentuk baris tabel HTML
-    if ($status == 'none') {
-    echo '<tr>
-            <td class="py-3">'.$id_organisasi.'</td>
+        echo '<tr>
+            <td class="py-3">' . $id_kegiatan . '</td>
             <td class="align-middle py-3">
                 <div class="d-flex align-items-center">
                     <div class="position-relative mr-2">
                         <span class="indicator indicator-lg indicator-bordered-reverse indicator-top-left indicator-success rounded-circle"></span>
-                        <span class="avatar-placeholder mr-md-2">' . substr($nama_organisasi, 0, 1) . '</span>
+                        <span class="avatar-placeholder mr-md-2">' . substr($nama_kegiatan, 0, 1) . '</span>
                     </div>
-                    ' . $nama_organisasi . '
+                    ' . $nama_kegiatan . '
                 </div>
             </td>
-            <td class="py-3">' . $deskripsi_organisasi . '</td>
-            <td class="py-3">' . $sosial_media . '</td>
-            <td class="py-3">' . $email_organisasi . '</td>
+            <td class="py-3">' . $deskripsi_kegiatan . '</td>
+            <td class="py-3">' . $tanggal_kegiatan . '</td>
+            <td class="py-3">' . $lokasi . '</td>
             <td class="py-3">
-            <div class="position-relative">
-            <button type="button" name="yes" class="btn btn-link" onclick="updateStatus(' . $id_organisasi . ', &quot;yes&quot;)">
-                <i class="fas fa-check">✔️</i>
-            </button>
-            <button type="button" name="no" class="btn btn-link" onclick="updateStatus(' . $id_organisasi . ', &quot;no&quot;)">
-                <i class="fas fa-times">✖</i>
-            </button>
-        </div>
+                <div class="position-relative">
+                    <button type="button" name="no" class="btn btn-link" onclick="updateStatus(' . $id_kegiatan . ', &quot;no&quot;)">
+                        <i class="fas fa-times">✖</i>
+                    </button>
+                </div>
             </td>
         </tr>';
+    }
+
+    // Bebaskan hasil query
+    $result->free_result();
+} else {
+    // Tampilkan pesan jika query gagal
+    echo "Error: " . $query . "<br>" . $conn->error;
 }
-}
+
+// Tutup koneksi ke database
+$conn->close();
 ?>
 <script>
-function updateStatus(idOrganisasi, status) {
-    console.log('ID Organisasi:', idOrganisasi);
-    console.log('Status:', status);
-
-    // Lakukan AJAX request untuk mengubah status di tabel organisasi
-    fetch('update_status.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: 'id_organisasi=' + idOrganisasi + '&status=' + status,
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Status berhasil diperbarui, lakukan aksi yang diperlukan (misalnya, tampilkan notifikasi)
-            alert('Status berhasil diperbarui!');
-        } else {
-            // Gagal memperbarui status, tampilkan pesan error (misalnya, tampilkan notifikasi)
-            alert('Gagal memperbarui status: ' + data.error);
-        }
-    })
-    .catch(error => console.error('Error:', error));
+    function updateStatus(id_kegiatan) {
+    // Konfirmasi pengguna sebelum menghapus
+    if (confirm('Apakah Anda yakin ingin menghapus kegiatan ini?')) {
+        // Lakukan AJAX request untuk menghapus data
+        fetch('update_status4.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id_kegiatan=' + id_kegiatan,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Data berhasil dihapus!');
+                location.reload(); // Muat ulang halaman setelah penghapusan berhasil
+            } else {
+                alert('Gagal menghapus data!');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
 }
+
 </script>
 
 

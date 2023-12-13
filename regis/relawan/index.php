@@ -83,9 +83,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="description" content="Colorlib Templates">
     <meta name="author" content="Colorlib">
     <meta name="keywords" content="Colorlib Templates">
+    <link rel="shortcut icon" href="/nuraga/images/logo/icon.mrh.png">
+
 
     <!-- Title Page-->
-    <title>NURAGA</title>
+    <title>Nuraga</title>
 
     <!-- Icons font CSS-->
     <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">

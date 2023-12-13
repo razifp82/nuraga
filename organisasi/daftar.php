@@ -89,7 +89,7 @@ if ($conn->query($query) === TRUE) {
     <title>Nuraga</title>
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="images/bg.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="/nuraga/images/logo/icon.mrh.png">
     <script>
         function showSuccessAlert() {
             alert("Kegiatan berhasil disimpan!");

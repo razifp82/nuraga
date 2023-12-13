@@ -32,14 +32,14 @@ if (isset($_GET["usertype"]) && $_GET["usertype"] !== $_SESSION["userType"]) {
 <html lang="en">
 <head>
     <!-- Title -->
-    <title>Users | Graindashboard UI Kit</title>
+    <title>Nuraga</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="public/img/favicon.ico">
+    <link rel="shortcut icon" href="/nuraga/images/logo/icon.mrh.png">
 
     <!-- Template -->
     <link rel="stylesheet" href="public/graindashboard/css/graindashboard.css">
@@ -50,7 +50,7 @@ if (isset($_GET["usertype"]) && $_GET["usertype"] !== $_SESSION["userType"]) {
             <div class="navbar-brand-wrapper d-flex align-items-center col-auto">
                 <!-- Logo For Mobile View -->
                 <a class="navbar-brand navbar-brand-mobile" href="/">
-                    <img class="img-fluid w-100" src="public/img/logo-mini.png" alt="Graindashboard">
+                    <img class="img-fluid w-100" src="/nuraga/images/logo/icon.hitam.png" alt="Graindashboard">
                 </a>
                 <!-- End Logo For Mobile View -->
     
@@ -111,10 +111,7 @@ if (!empty($nama)) {
         <!-- Sidebar Nav -->
         <aside id="sidebar" class="js-custom-scroll side-nav">
             <ul id="sideNav" class="side-nav-menu side-nav-menu-top-level mb-0">
-              
-                
-               
-    
+
                 <!-- Users -->
                 <li class="side-nav-menu-item side-nav-has-menu">
                     <a class="side-nav-menu-link media align-items-center" href="#"
@@ -122,7 +119,7 @@ if (!empty($nama)) {
                       <span class="side-nav-menu-icon d-flex mr-3">
                         <i class="gd-user"></i>
                       </span>
-                        <span class="side-nav-fadeout-on-closed media-body">Validasi Akun</span>
+                        <span class="side-nav-fadeout-on-closed media-body">Organisasi</span>
                         <span class="side-nav-control-icon d-flex">
                     <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
                   </span>
@@ -140,8 +137,39 @@ if (!empty($nama)) {
                     </ul>
                     <!-- End Users: subUsers -->
                 </li>
+                <li class="side-nav-menu-item side-nav-has-menu">
+                <a class="side-nav-menu-link media align-items-center" href="#"
+                   data-target="#subPages">
+              <span class="side-nav-menu-icon d-flex mr-3">
+                <i class="gd-lock"></i>
+              </span>
+                    <span class="side-nav-fadeout-on-closed media-body">Relawan</span>
+                    <span class="side-nav-control-icon d-flex">
+                <i class="gd-angle-right side-nav-fadeout-on-closed"></i>
+              </span>
+                    <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                </a>
+
+                <!-- Pages: subPages -->
+                <ul id="subPages" class="side-nav-menu side-nav-menu-second-level mb-0">
+                    <li class="side-nav-menu-item">
+                        <a class="side-nav-menu-link" href="relawanban.php">Ban</a>
+                    </li>
+                    <li class="side-nav-menu-item">
+                        <a class="side-nav-menu-link" href="relawanunban.php">Unban</a>
+                    </li>
+                </ul>
+                <!-- End Pages: subPages -->
+            </li>
                 <!-- End Users -->
-    
+                <li class="side-nav-menu-item">
+                <a class="side-nav-menu-link media align-items-center" href="kegiatan.php">
+              <span class="side-nav-menu-icon d-flex mr-3">
+                <i class="gd-file"></i>
+              </span>
+                    <span class="side-nav-fadeout-on-closed media-body">Kegiatan</span>
+                </a>
+            </li>
             </ul>
         </aside>
         <!-- End Sidebar Nav -->
