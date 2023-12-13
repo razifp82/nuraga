@@ -63,7 +63,7 @@ function handleCancel(id_kegiatan) {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: 'id_kegiatan=' + id_kegiatan, // Perubahan di sini
+        body: 'id_kegiatan=' + id_kegiatan,
     })
     .then(response => response.json())
     .then(data => {
@@ -81,6 +81,5 @@ function handleCancel(id_kegiatan) {
     const notification = document.querySelector('.notification-message');
     notification.remove();
 }
-
 
 </script>

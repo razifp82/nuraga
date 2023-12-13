@@ -39,22 +39,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
     $nama_organisasi = $_SESSION['nama_organisasi'];
     $id_organisasi = $_SESSION['id_organisasi'];
 
-    // Proses file dokumentasi
     $nama_file = $_FILES['dokumentasi']['name'];
     $ukuran_file = $_FILES['dokumentasi']['size'];
     $tipe_file = $_FILES['dokumentasi']['type'];
     $tmp_file = $_FILES['dokumentasi']['tmp_name'];
-
+    
+    // Mendapatkan ekstensi file
+    $ext = pathinfo($nama_file, PATHINFO_EXTENSION);
+    
+    // Membuat nama file baru yang unik
+    $new_file_name = "kegiatan_" . time() . "_" . rand(1000, 9999) . "." . $ext;
+    
     // Simpan file ke direktori tertentu (misalnya: upload/)
     $upload_dir = "upload/";
-    $upload_path = $upload_dir . $nama_file;
-
+    $upload_path = $upload_dir . $new_file_name;
+    
     // Pindahkan file ke direktori upload
     if (move_uploaded_file($tmp_file, $upload_path)) {
         // Implementasikan penyimpanan data ke database, sesuaikan dengan struktur tabel Anda
         $query = "INSERT INTO kegiatan (nama_kegiatan, jenis_kegiatan, deskripsi_kegiatan, tanggal_kegiatan, lokasi, dokumentasi, organisasi ,id_organisasi) 
-                  VALUES ('$nama_kegiatan', '$jenis_kegiatan', '$deskripsi_kegiatan', '$tanggal_kegiatan', '$lokasi', '$nama_file', '$nama_organisasi','$id_organisasi')";
-
+                  VALUES ('$nama_kegiatan', '$jenis_kegiatan', '$deskripsi_kegiatan', '$tanggal_kegiatan', '$lokasi', '$new_file_name', '$nama_organisasi','$id_organisasi')";
+    
 if ($conn->query($query) === TRUE) {
     // Redirect ke halaman kegiatan setelah berhasil menyimpan
     echo '<script>showSuccessAlert();</script>';

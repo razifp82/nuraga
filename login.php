@@ -3,16 +3,19 @@ session_start();
 
 include 'koneksi.php';
 
+function hashPassword($password) {
+    return password_hash($password, PASSWORD_DEFAULT);
+}
+
 // Fungsi untuk melakukan login
 function login($username, $password) {
     $conn = connectDB();
 
     // Hindari SQL Injection
     $username = $conn->real_escape_string($username);
-    $password = $conn->real_escape_string($password);
 
-    // Enkripsi password dengan MD5
-     $password = md5($password);
+    // Hash password yang dimasukkan oleh pengguna
+    $hashedPassword = hashPassword($password);
 
     // Tentukan tabel login berdasarkan username
     $tables = ['admin', 'relawan', 'organisasi'];
@@ -28,11 +31,11 @@ function login($username, $password) {
              // Verifikasi status akun untuk organisasi
              if ($table === 'organisasi' && $row['status'] === 'none') {
                 // Tampilkan pesan alert jika verifikasi akun belum disetujui oleh admin
-                echo '<script>alert("Verifikasi akun anda belum di setujui oleh admin. Silahkan tunggu beberapa saat."); window.location.href = "index.php";</script>';
+                echo "<script>alert('Verifikasi akun anda belum di setujui oleh admin. Silahkan tunggu beberapa saat.'); window.location.href = 'index.php';</script>";
                 exit();
             } elseif ($table === 'organisasi' && $row['status'] === 'no') {
                 // Tampilkan pesan alert jika verifikasi akun ditolak oleh admin
-                echo '<script>alert("Verifikasi akun anda ditolak oleh admin. Silahkan hubungi admin untuk informasi lebih lanjut melalui email yang tesedia di wesbite."); window.location.href = "index.php";</script>';
+                echo "<script>alert('Verifikasi akun anda ditolak oleh admin. Silahkan hubungi admin untuk informasi lebih lanjut melalui email yang tesedia.'); window.location.href = 'index.php';</script>";
                 exit();
             }
             
@@ -62,16 +65,12 @@ function login($username, $password) {
                     header("Location: relawan/relawan.php?username=".$username);
                     break;
                 case 'organisasi':
-                  
                     $_SESSION['id_organisasi'] = $row['id_organisasi'];
                     $_SESSION['nama_organisasi'] = $row['nama_organisasi'];
                     $_SESSION['sosial_media '] = $row['sosial_media'];
                     $_SESSION['deskripsi_organisasi'] = $row['deskripsi_organisasi'];
                     $_SESSION['email_organisasi'] = $row['email_organisasi']; 
                     header("Location: organisasi/organisasi.php?username=".$username);
-                    break;
-                default:
-                    // Tambahkan penanganan kesalahan jika diperlukan
                     break;
             }
             exit();

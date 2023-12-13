@@ -228,6 +228,7 @@ if (!empty($search)) {
                 </div>
             </div>
         </div>
+        </div>
 
         <script>
             function updateCardContent(element, property) {
