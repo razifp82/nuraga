@@ -63,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($conn->query($sql) === TRUE) {
             echo '<script>alert("Pendaftaran berhasil! Selamat datang, ' . $nama . '!");</script>';
+            header("Location: /nuraga/index.php");
         } else {
             echo '<script>alert("Error: ' . $sql . '\n' . $conn->error . '");</script>';
         }

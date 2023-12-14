@@ -60,17 +60,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES['dokumentasi'])) {
         $query = "INSERT INTO kegiatan (nama_kegiatan, jenis_kegiatan, deskripsi_kegiatan, tanggal_kegiatan, lokasi, dokumentasi, organisasi ,id_organisasi) 
                   VALUES ('$nama_kegiatan', '$jenis_kegiatan', '$deskripsi_kegiatan', '$tanggal_kegiatan', '$lokasi', '$new_file_name', '$nama_organisasi','$id_organisasi')";
     
-if ($conn->query($query) === TRUE) {
-    // Redirect ke halaman kegiatan setelah berhasil menyimpan
-    echo '<script>showSuccessAlert();</script>';
-    header("Location: /nuraga/organisasi/organisasi.php?username=" . $_SESSION["user"]);
-    exit;
-} else {
-    // Hapus file yang sudah diupload jika gagal menyimpan ke database
-    unlink($upload_path);
-    // Tampilkan pesan error jika gagal menyimpan
-    echo '<script>alert("Error: ' . $conn->error . '");</script>';
-}
+    if ($conn->query($query) === TRUE) {
+        // Redirect to halaman organisasi.php after successfully saving
+        echo '<script>alert("Kegiatan berhasil disimpan!"); window.location.href = "/nuraga/organisasi/organisasi.php?username=' . $_SESSION["user"] . '";</script>';
+        exit;
+    } else {
+        // Hapus file yang sudah diupload jika gagal menyimpan ke database
+        unlink($upload_path);
+        // Tampilkan pesan error jika gagal menyimpan
+        echo '<script>alert("Error: ' . $conn->error . '");</script>';
+    }
 
     } else {
         echo "Error uploading file.";

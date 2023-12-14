@@ -3,7 +3,10 @@ session_start();
 
 include ".././koneksi.php";
 
-$query = "SELECT * FROM kegiatan WHERE status = 'selesai'";
+$query = "SELECT kegiatan.nama_kegiatan, laporan_kegiatan.hasil_kegiatan, kegiatan.dokumentasi
+          FROM kegiatan
+          JOIN laporan_kegiatan ON kegiatan.id_kegiatan = laporan_kegiatan.id_kegiatan
+          WHERE kegiatan.status = 'selesai'";
 $result = $conn->query($query);
 
 if (!isset($_SESSION["user"]) || !isset($_SESSION["userType"])) {
@@ -65,42 +68,39 @@ if ($_SESSION["userType"] !== 'organisasi') {
     </section>
 
     <section id="programs">
-        <div class="program-content">
-            <section class="articles">
-                <?php
-                // Loop melalui hasil query dan menampilkan data kegiatan
-                while ($row = $result->fetch_assoc()) {
-                    $nama_kegiatan = $row['nama_kegiatan'];
-                    $deskripsi_kegiatan = $row['deskripsi_kegiatan'];
-                    $dokumentasi = $row['dokumentasi'];
-                ?>
-                    <article>
-                        <div class="article-wrapper">
-                            <figure>
-                                <img src="/nuraga/organisasi/upload/<?php echo $dokumentasi; ?>" alt="" />
-                            </figure>
-                            <div class="article-body">
-                                <h2><?php echo $nama_kegiatan; ?></h2>
-                                <p>
-                                    <?php echo $deskripsi_kegiatan; ?>
-                                </p>
-                                <a href="#" class="read-more">
-                                    <span class="sr-only">about <?php echo $nama_kegiatan; ?></span>
-                                    <svg xmlns="http://www.w3.org/2000/sv" class="icon" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </a>
-                            </div>
+    <div class="program-content">
+        <section class="articles">
+            <?php
+            while ($row = $result->fetch_assoc()) {
+                $nama_kegiatan = $row['nama_kegiatan'];
+                $hasil_kegiatan = $row['hasil_kegiatan'];
+                $dokumentasi = $row['dokumentasi'];
+            ?>
+                <article>
+                    <div class="article-wrapper">
+                        <figure>
+                            <img src="/nuraga/organisasi/upload/<?php echo $dokumentasi; ?>" alt="" />
+                        </figure>
+                        <div class="article-body">
+                            <h2><?php echo $nama_kegiatan; ?></h2>
+                            <p>
+                                <?php echo $hasil_kegiatan; ?>
+                            </p>
+                            <a href="#" class="read-more">
+                                <span class="sr-only">tentang <?php echo $nama_kegiatan; ?></span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
                         </div>
-                    </article>
-                <?php
-                }
-                ?>
-            </section>
-        </div>
-    </section>
+                    </div>
+                </article>
+            <?php
+            }
+            ?>
+        </section>
     </div>
-    </section>
+</section>
     <section id="about">
         <div class="about-content">
             <img src="\nuraga/images/logo/logo.htm.png" alt="">

@@ -67,7 +67,7 @@ if ($_SESSION["userType"] !== 'organisasi') {
 $nama_organisasi = $_SESSION["nama_organisasi"];
 $query = "SELECT id_kegiatan, nama_kegiatan, lokasi, tanggal_kegiatan, deskripsi_kegiatan, jenis_kegiatan, dokumentasi, status 
           FROM kegiatan 
-          WHERE organisasi = '$nama_organisasi'";
+          WHERE organisasi = '$nama_organisasi' AND status = 'belum'";
 $result = $conn->query($query);
 
 // Periksa apakah query berhasil dijalankan
